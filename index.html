@@ -48,19 +48,23 @@
   }
 
   /* 头部 */
-  .header { text-align: center; padding: 44px 0 22px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
-  .header h1 {
+  .header-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+    padding: 34px 28px 28px; text-align: center; margin-bottom: 40px;
+    box-shadow: 0 1px 3px rgba(43,60,80,0.04);
+  }
+  .header-card h1 {
     font-size: 30px; font-weight: 700; color: var(--title);
     letter-spacing: -0.03em; line-height: 1.2;
     display: inline-flex; align-items: center; gap: 12px; justify-content: center;
   }
-  .header h1 .ico {
+  .header-card h1 .ico {
     width: 40px; height: 40px; border-radius: 12px;
     background: var(--accent-tint);
     display: inline-flex; align-items: center; justify-content: center;
     color: var(--accent);
   }
-  .header .subtitle { color: var(--text-secondary); font-size: 13.5px; margin-top: 10px; letter-spacing: .02em; font-weight: 400; }
+  .header-card .subtitle { color: var(--text-secondary); font-size: 13.5px; margin-top: 10px; letter-spacing: .02em; font-weight: 400; }
 
   .date-row {
     display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px;
@@ -117,11 +121,15 @@
 
   /* 区块标题 */
   .section { margin-bottom: 44px; }
-  .section-title {
-    font-size: 19px; font-weight: 700; margin: 2px 0 20px; display: flex; align-items: center; gap: 10px;
-    color: var(--title); letter-spacing: .01em;
+  .section-head {
+    display: flex; align-items: center; gap: 11px;
+    background: var(--accent-tint); border: 1px solid #5e93b82e; border-radius: 12px;
+    padding: 13px 18px; margin-bottom: 16px;
   }
-  .section-title .bar { width: 3px; height: 18px; border-radius: 3px; background: var(--accent); display: inline-block; }
+  .section-head .si { color: var(--accent); display: inline-flex; }
+  .section-head .si svg { width: 19px; height: 19px; }
+  .section-head .st { font-size: 16.5px; font-weight: 700; color: var(--title); letter-spacing: .01em; }
+  .section-head .sm { margin-left: auto; font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
 
   /* 时间线 - 项目段 */
   .seg { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; }
@@ -185,8 +193,8 @@
 
   /* 线性 SVG 图标系统 */
   .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: -0.14em; }
-  .header .ico { color: var(--accent); }
-  .header .ico svg { width: 21px; height: 21px; }
+  .header-card .ico { color: var(--accent); }
+  .header-card .ico svg { width: 21px; height: 21px; }
   .date-btn .cal svg { width: 17px; height: 17px; }
   .date-btn .arrow svg { width: 12px; height: 12px; transition: transform .2s; }
   .date-nav svg, .cal-nav svg { width: 16px; height: 16px; stroke-width: 2; }
@@ -224,7 +232,7 @@
 <body>
 <div class="topbar"></div>
 
-<div class="header">
+<div class="header-card">
   <h1><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5M9.5 8.5h1.5"/></svg></span>每日工作总结报告</h1>
   <div class="subtitle">基于电脑活动痕迹自动生成 · 多日报汇总查阅</div>
   <div class="date-row">
@@ -369,6 +377,7 @@
   const $ = (s) => document.querySelector(s);
 
   const ICONS = {
+    clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
     doc: '<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5M9.5 8.5h1.5"/>',
     calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3v3.5M16 3v3.5"/><path d="M8 13h.5M11.5 13h.5M15 13h.5M8 16.3h.5M11.5 16.3h.5M15 16.3h.5"/>',
     down: '<path d="M6 9l6 6 6-6"/>',
@@ -449,12 +458,12 @@
       </div>
 
       <div class="section">
-        <div class="section-title"><span class="bar"></span>工作时间线</div>
+        <div class="section-head"><span class="si">${ic('clock')}</span><span class="st">工作时间线</span><span class="sm">${d.segments.length} 个时段</span></div>
         ${segsHtml}
       </div>
 
       <div class="section">
-        <div class="section-title"><span class="bar"></span>工作项清单（可直接复制）</div>
+        <div class="section-head"><span class="si">${ic('list')}</span><span class="st">工作项清单</span><span class="sm">可一键复制</span></div>
         <div class="checklist-wrap">
           <div class="checklist-head">
             <div class="ct">${ic('list')} 当日工作项</div>
