@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日工作总结报告 · 汇总</title>
+<style>
+  :root {
+    --bg: #eef2f5;
+    --bg-top: #e6f0f8;
+    --card-bg: #ffffff;
+    --border: #d8e0e6;
+    --text: #3d4750;
+    --text-secondary: #8794a0;
+    --title: #2f3a42;
+    --accent: #6fa3c7;
+    --accent-soft: #8fb0cc;
+    --green: #9fc0ae;
+    --orange: #d8b693;
+    --red: #d2a0a0;
+    --purple: #b0a6cd;
+    --teal: #6fb3ad;
+    --pink: #d2a6bd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 260px, var(--bg) 100%);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 24px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .topbar {
+    height: 6px;
+    background: linear-gradient(90deg, #6fa3c7, #8fb0cc, #a9c7e0, #8fb0cc, #6fa3c7);
+    border-radius: 0 0 6px 6px;
+    margin: 0 -24px 0;
+  }
+
+  /* 头部 + 日期选择器 */
+  .header { text-align: center; padding: 34px 0 18px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+  .header h1 {
+    font-size: 27px; font-weight: 700; color: var(--title);
+    display: inline-flex; align-items: center; gap: 10px; justify-content: center;
+  }
+  .header h1 .ico {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, #6fa3c7, #8fb0cc);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 18px;
+    box-shadow: 0 2px 6px rgba(111,163,199,0.35);
+  }
+  .header .subtitle { color: var(--text-secondary); font-size: 14px; margin-top: 6px; }
+
+  .date-row {
+    display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 18px;
+    position: relative;
+  }
+  .date-nav {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--card-bg); color: var(--accent); font-size: 16px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; transition: all .15s;
+  }
+  .date-nav:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .date-nav:disabled { opacity: .35; cursor: not-allowed; }
+
+  .date-picker {
+    position: relative;
+  }
+  .date-btn {
+    background: #6fa3c722; color: #4f86ab; border: 1px solid #6fa3c744;
+    padding: 7px 18px 7px 14px; border-radius: 22px; font-size: 14px; font-weight: 600;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .15s;
+  }
+  .date-btn:hover { background: #6fa3c733; }
+  .date-btn .cal { font-size: 16px; }
+  .date-btn .arrow { font-size: 11px; transition: transform .2s; }
+  .date-picker.open .date-btn .arrow { transform: rotate(180deg); }
+
+  .date-dropdown {
+    position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(60,80,100,0.18); padding: 8px; min-width: 230px; z-index: 50;
+    display: none; max-height: 320px; overflow-y: auto;
+  }
+  .date-picker.open .date-dropdown { display: block; }
+  .date-dropdown .opt {
+    padding: 9px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; color: var(--text);
+    display: flex; align-items: center; justify-content: space-between; transition: background .12s;
+  }
+  .date-dropdown .opt:hover { background: var(--bg); }
+  .date-dropdown .opt.active { background: #6fa3c722; color: #4f86ab; font-weight: 600; }
+  .date-dropdown .opt .tag { font-size: 11px; color: var(--text-secondary); }
+  .date-dropdown .opt.active .tag { color: #4f86ab; }
+  .date-dropdown .hint { padding: 6px 14px; font-size: 11px; color: var(--text-secondary); border-top: 1px dashed var(--border); margin-top: 6px; }
+
+  /* 统计卡片 */
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-bottom: 34px; }
+  .stat-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-top: 3px solid var(--accent);
+    border-radius: 12px; padding: 18px 16px; text-align: center;
+    box-shadow: 0 2px 8px rgba(60,80,100,0.06); position: relative; overflow: hidden;
+  }
+  .stat-card::after { content: ''; position: absolute; right: -18px; top: -18px; width: 56px; height: 56px; border-radius: 50%; background: #6fa3c714; }
+  .stat-card .label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+  .stat-card .value { font-size: 22px; font-weight: 700; }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.orange { color: var(--orange); }
+  .stat-card .value.blue { color: var(--accent); }
+  .stat-card .value.purple { color: var(--purple); }
+
+  /* 区块标题 */
+  .section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    color: var(--title);
+  }
+  .section-title .bar { width: 4px; height: 18px; border-radius: 3px; background: var(--accent); display: inline-block; }
+
+  /* 时间线 - 项目段 */
+  .seg { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(60,80,100,0.05); }
+  .seg-head {
+    display: flex; align-items: center; gap: 10px; padding: 14px 18px; cursor: pointer; user-select: none;
+    border-left: 4px solid var(--accent); transition: background .15s;
+  }
+  .seg-head:hover { background: #6fa3c20; background: rgba(111,163,199,0.06); }
+  .seg.fill .seg-head { border-left-color: var(--orange); }
+  .seg-head .seg-ico { font-size: 17px; }
+  .seg-head .seg-name { font-size: 15px; font-weight: 600; color: var(--title); flex: 1; }
+  .seg.fill .seg-head .seg-name { color: #9c7b54; }
+  .seg-head .seg-time { font-size: 12px; color: var(--text-secondary); }
+  .seg-head .arrow { font-size: 13px; color: var(--text-secondary); transition: transform .2s; }
+  .seg.collapsed .arrow { transform: rotate(-90deg); }
+  .seg-body { padding: 4px 18px 16px; }
+  .seg.collapsed .seg-body { display: none; }
+
+  .tl-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-dot { flex: 0 0 10px; height: 10px; width: 10px; border-radius: 50%; background: var(--accent); margin-top: 7px; }
+  .tl-item.fill .tl-dot { background: var(--orange); }
+  .tl-time { flex: 0 0 110px; font-size: 12px; font-weight: 700; color: var(--accent); padding-top: 1px; }
+  .tl-item.fill .tl-time { color: var(--orange); }
+  .tl-body .t { font-size: 14px; font-weight: 600; color: var(--title); }
+  .tl-body .d { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+
+  .gap-card {
+    background: #d8b69311; border: 1px dashed #d8b69344; border-radius: 10px;
+    padding: 12px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
+  }
+  .gap-card .gi { font-size: 18px; }
+  .gap-card .gt { font-size: 13px; font-weight: 600; color: var(--orange); }
+  .gap-card .gd { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+  /* 工作清单 */
+  .checklist-wrap { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(60,80,100,0.05); }
+  .checklist-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .checklist-head .ct { font-size: 15px; font-weight: 700; color: var(--title); display: flex; align-items: center; gap: 8px; }
+  .copy-btn {
+    background: linear-gradient(135deg, #6fa3c7, #8fb0cc); color: #fff; border: none;
+    padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(111,163,199,0.35); transition: all .15s;
+  }
+  .copy-btn:hover { filter: brightness(1.05); }
+  .copy-btn.done { background: linear-gradient(135deg, #9fc0ae, #6fb3ad); }
+  pre#checklistPre {
+    background: #f4f6f8; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+    font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 13.5px; line-height: 1.9;
+    color: var(--title); white-space: pre-wrap; word-break: break-all;
+  }
+
+  .scan-info { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 30px; }
+  .scan-info h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .scan-info ul { list-style: none; padding: 0; }
+  .scan-info li { font-size: 13px; color: var(--teal); padding: 3px 0; }
+  .scan-info li::before { content: '✓ '; margin-right: 4px; }
+
+  .footer { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 20px; }
+
+  .note-banner { background: #d8b69315; border: 1px solid #d8b69344; border-radius: 10px; padding: 12px 16px; margin-bottom: 22px; font-size: 13px; color: #9c7b54; }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<div class="header">
+  <h1><span class="ico">📋</span>每日工作总结报告</h1>
+  <div class="subtitle">基于电脑活动痕迹自动生成 · 多日报汇总查阅</div>
+  <div class="date-row">
+    <button class="date-nav" id="prevBtn" title="前一天">‹</button>
+    <div class="date-picker" id="datePicker">
+      <div class="date-btn" id="dateBtn">
+        <span class="cal">📅</span>
+        <span id="dateLabel">—</span>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="date-dropdown" id="dateDropdown"></div>
+    </div>
+    <button class="date-nav" id="nextBtn" title="后一天">›</button>
+  </div>
+</div>
+
+<div id="reportView"></div>
+
+<div class="footer" id="footerView"></div>
+
+<script id="reportData" type="application/json">
+{
+  "dates": [
+    {
+      "id": "2026-07-24",
+      "label": "2026年7月24日（周五）",
+      "subtitle": "示例数据 · 基于真实活动痕迹",
+      "tag": "示例",
+      "stats": { "start": "09:00", "end": "18:00", "total": "480分钟", "real": "267分钟", "fill": "213分钟", "gaps": "1 段" },
+      "note": "示例报告：真实活动约 267 分钟，其余 213 分钟为按工作习惯合理补全（陶沙色段）。",
+      "segments": [
+        { "title": "晨间准备与沟通", "ico": "💬", "time": "09:00–09:20", "fill": false, "events": [
+          { "time": "09:00–09:20", "t": "企业微信上线与工具环境准备", "d": "企业微信启动同步、AI工具环境检查" }
+        ]},
+        { "title": "早安图/效果图设计产出", "ico": "🎨", "time": "09:20–12:00", "fill": false, "events": [
+          { "time": "09:20–11:30", "t": "优化/RunningHub/ComfyUI早安图效果图", "d": "万骊/拉迷品牌效果图批量处理（约 28+31 张）" },
+          { "time": "11:30–12:00", "t": "风格素材整理与提示词归纳", "d": "导出克制温润 / 静奢电影等风格素材包" }
+        ]},
+        { "title": "午休", "ico": "🍽️", "time": "12:00–13:00", "fill": false, "lunch": true, "events": [
+          { "time": "12:00–13:00", "t": "午休", "d": "正常休息，不计入工作时长" }
+        ]},
+        { "title": "账号与环境搭建", "ico": "🔐", "time": "13:00–14:15", "fill": false, "events": [
+          { "time": "13:00–14:15", "t": "账号体系搭建(WorkBuddy/CodeBuddy)", "d": "注册登录、编辑器插件更新、外设调试" }
+        ]},
+        { "title": "AI工具测试探索", "ico": "🧪", "time": "14:15–15:15", "fill": false, "events": [
+          { "time": "14:15–15:15", "t": "测试workbuddy/AI工具探索", "d": "Codex 配置、Kimi 桌面版、Trae CN 等" }
+        ]},
+        { "title": "效果图二次精修与交付", "ico": "🎨", "time": "15:15–16:15", "fill": false, "events": [
+          { "time": "15:15–16:15", "t": "效果图二次精修与归档", "d": "多风格效果图精修并归档交付" }
+        ]},
+        { "title": "学习AI/计算机基础", "ico": "📚", "time": "16:15–17:30", "fill": true, "events": [
+          { "time": "16:15–17:30", "t": "学习AI/计算机基础", "d": "补充时段 · 按工作习惯补全" }
+        ]},
+        { "title": "夕会总结", "ico": "📊", "time": "17:30–18:00", "fill": true, "events": [
+          { "time": "17:30–18:00", "t": "夕会", "d": "补充时段 · 按工作习惯补全" }
+        ]}
+      ],
+      "checklist": [
+        "1.企业微信上线与工具环境准备 20分钟",
+        "2.优化/RunningHub/ComfyUI早安图效果图 130分钟",
+        "3.风格素材整理与提示词归纳 30分钟",
+        "4.账号体系搭建(WorkBuddy/CodeBuddy) 75分钟",
+        "5.测试workbuddy/AI工具探索 60分钟",
+        "6.效果图二次精修与归档 60分钟",
+        "7.学习AI/计算机基础 75分钟",
+        "8.夕会 30分钟"
+      ],
+      "scanInfo": [
+        "文件活动 — 桌面、文档、下载、E盘工作目录的文件修改记录",
+        "Chrome浏览器历史 — 当天访问记录",
+        "Windows最近文件 — 系统记录的最近打开文件",
+        "企业微信活跃时间 — 文档/日志信号"
+      ],
+      "footer": "报告生成于 2026-07-27 · 示例数据"
+    },
+    {
+      "id": "2026-07-25",
+      "label": "2026年7月25日（周六）",
+      "subtitle": "真实活动痕迹（旧版报告整理）",
+      "tag": "",
+      "stats": { "start": "08:57", "end": "12:00", "total": "约 2.5 小时", "real": "约 2.5 小时", "fill": "—", "gaps": "0 段" },
+      "note": "",
+      "segments": [
+        { "title": "晨间准备与工具配置", "ico": "💬", "time": "08:57–09:18", "fill": false, "events": [
+          { "time": "08:57–09:18", "t": "企业微信上线与AI工具环境准备", "d": "企业微信上线、Trae CN 编辑器启动、Codex 环境准备" }
+        ]},
+        { "title": "AI工具探索与配置", "ico": "🧪", "time": "09:37–12:00", "fill": false, "events": [
+          { "time": "09:37", "t": "浏览 GitHub 开源项目", "d": "技术调研" },
+          { "time": "10:19–10:25", "t": "ChatGPT Codex Connector 配置", "d": "GitHub OAuth 授权 + Google 验证 + Figma MCP" },
+          { "time": "10:22–10:39", "t": "Codex 配置更新 + Kimi 桌面版启动", "d": "插件缓存刷新、Kimi 桌面版启动" }
+        ]}
+      ],
+      "checklist": [
+        "1.企业微信上线与AI工具环境准备 21分钟",
+        "2.浏览GitHub开源项目调研 5分钟",
+        "3.ChatGPT Codex连接器配置 17分钟",
+        "4.Codex配置更新与Kimi桌面版启动 30分钟"
+      ],
+      "scanInfo": [
+        "文件活动 — 桌面、文档、下载、E盘工作目录的文件修改记录",
+        "Chrome浏览器历史 — 当天访问记录（77条）",
+        "Windows最近文件 — 系统记录的最近打开文件",
+        "企业微信活跃时间 — WXWork 文档日志"
+      ],
+      "footer": "报告生成于 2026-07-25 · 基于旧版单日报告整理"
+    },
+    {
+      "id": "2026-07-27",
+      "label": "2026年7月27日（周一）",
+      "subtitle": "今日实时活动（上午片段）",
+      "tag": "实时",
+      "stats": { "start": "08:55", "end": "09:20", "total": "约 25 分钟", "real": "约 25 分钟", "fill": "—", "gaps": "0 段" },
+      "note": "当前为上午时段，今日活动刚起步，晚间 17:50 将自动补全全天并凑齐 480 分钟。",
+      "segments": [
+        { "title": "晨间办公与订阅处理", "ico": "💬", "time": "08:55–09:20", "fill": false, "events": [
+          { "time": "08:55–09:05", "t": "企业微信启动及消息同步", "d": "账号上线、消息拉取" },
+          { "time": "09:05–09:17", "t": "浏览AI订阅服务并下单支付", "d": "查看订阅方案、完成支付" },
+          { "time": "09:17–09:20", "t": "查收Gmail邮件及验证码", "d": "下载支付凭证 PDF" }
+        ]}
+      ],
+      "checklist": [
+        "1.企业微信启动及消息同步 10分钟",
+        "2.浏览AI订阅服务并下单支付 12分钟",
+        "3.查收Gmail邮件及验证码 5分钟"
+      ],
+      "scanInfo": [
+        "文件活动 — 桌面、文档、下载、E盘工作目录的文件修改记录",
+        "Chrome浏览器历史 — 当天访问记录",
+        "Windows最近文件 — 系统记录的最近打开文件",
+        "企业微信活跃时间 — 文档/日志信号"
+      ],
+      "footer": "报告生成于 2026-07-27 09:20 · 实时片段"
+    }
+  ]
+}
+</script>
+
+<script>
+  const DATA = JSON.parse(document.getElementById('reportData').textContent);
+  let current = DATA.dates.length - 1; // 默认显示最新一天
+
+  const $ = (s) => document.querySelector(s);
+
+  function renderDate(idx) {
+    const d = DATA.dates[idx];
+    current = idx;
+
+    // 日期选择器
+    $('#dateLabel').textContent = d.label;
+    $('#prevBtn').disabled = idx === 0;
+    $('#nextBtn').disabled = idx === DATA.dates.length - 1;
+    document.querySelectorAll('#dateDropdown .opt').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+
+    // 统计卡片
+    const s = d.stats;
+    let segsHtml = '';
+    d.segments.forEach((seg) => {
+      const fillCls = seg.fill ? ' fill' : '';
+      const lunchCls = seg.lunch ? ' lunch' : '';
+      let body = '';
+      seg.events.forEach((ev) => {
+        const evFill = (seg.fill && !seg.lunch) ? ' fill' : '';
+        body += `<div class="tl-item${evFill}">
+          <div class="tl-dot"></div>
+          <div class="tl-time">${ev.time}</div>
+          <div class="tl-body"><div class="t">${ev.t}</div><div class="d">${ev.d || ''}</div></div>
+        </div>`;
+      });
+      const segHtml = seg.lunch
+        ? `<div class="gap-card${lunchCls}"><div class="gi">🍽️</div><div><div class="gt">${seg.events[0].time}</div><div class="gd">${seg.events[0].d}</div></div></div>`
+        : `<div class="seg${fillCls}">
+            <div class="seg-head" onclick="toggleSeg(this)">
+              <span class="seg-ico">${seg.ico}</span>
+              <span class="seg-name">${seg.title}</span>
+              <span class="seg-time">${seg.time}</span>
+              <span class="arrow">▾</span>
+            </div>
+            <div class="seg-body">${body}</div>
+          </div>`;
+      segsHtml += segHtml;
+    });
+
+    const checklist = d.checklist.join('\n');
+
+    const scanHtml = d.scanInfo.map((x) => `<li>${x}</li>`).join('');
+    const noteHtml = d.note ? `<div class="note-banner">⚠️ ${d.note}</div>` : '';
+
+    $('#reportView').innerHTML = `
+      ${noteHtml}
+      <div class="stats-row">
+        <div class="stat-card"><div class="label">最早活动</div><div class="value blue">${s.start}</div></div>
+        <div class="stat-card"><div class="label">最后活动</div><div class="value green">${s.end}</div></div>
+        <div class="stat-card"><div class="label">真实时长</div><div class="value green">${s.real}</div></div>
+        <div class="stat-card"><div class="label">空白/补齐</div><div class="value orange">${s.gaps}</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span class="bar"></span>工作时间线</div>
+        ${segsHtml}
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span class="bar"></span>工作项清单（可直接复制）</div>
+        <div class="checklist-wrap">
+          <div class="checklist-head">
+            <div class="ct">📝 当日工作项</div>
+            <button class="copy-btn" id="copyBtn" onclick="copyChecklist()">📋 复制清单</button>
+          </div>
+          <pre id="checklistPre">${checklist}</pre>
+        </div>
+      </div>
+
+      <div class="scan-info">
+        <h3>扫描了哪些数据源</h3>
+        <ul>${scanHtml}</ul>
+      </div>
+    `;
+
+    $('#footerView').textContent = d.footer || '';
+  }
+
+  function toggleSeg(head) {
+    head.closest('.seg').classList.toggle('collapsed');
+  }
+
+  function copyChecklist() {
+    const text = document.getElementById('checklistPre').textContent;
+    const btn = document.getElementById('copyBtn');
+    const done = () => {
+      btn.textContent = '✓ 已复制';
+      btn.classList.add('done');
+      setTimeout(() => { btn.textContent = '📋 复制清单'; btn.classList.remove('done'); }, 1500);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, cb) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  // 日期下拉
+  const picker = $('#datePicker');
+  $('#dateBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    picker.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!picker.contains(e.target)) picker.classList.remove('open');
+  });
+  $('#prevBtn').addEventListener('click', () => { if (current > 0) renderDate(current - 1); });
+  $('#nextBtn').addEventListener('click', () => { if (current < DATA.dates.length - 1) renderDate(current + 1); });
+
+  // 填充下拉
+  const dd = $('#dateDropdown');
+  DATA.dates.forEach((d, i) => {
+    const opt = document.createElement('div');
+    opt.className = 'opt' + (i === current ? ' active' : '');
+    opt.innerHTML = `<span>${d.label}</span><span class="tag">${d.tag || ''}</span>`;
+    opt.addEventListener('click', () => {
+      renderDate(i);
+      picker.classList.remove('open');
+    });
+    dd.appendChild(opt);
+  });
+  const hint = document.createElement('div');
+  hint.className = 'hint';
+  hint.textContent = '点击日期可展开选择 · ‹ › 切换相邻日';
+  dd.appendChild(hint);
+
+  renderDate(current);
+</script>
+</body>
+</html>
