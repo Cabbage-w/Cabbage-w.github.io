@@ -181,6 +181,25 @@
   .footer { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 20px; }
 
   .note-banner { background: #d8b69315; border: 1px solid #d8b69344; border-radius: 10px; padding: 12px 16px; margin-bottom: 22px; font-size: 13px; color: #9c7b54; }
+
+  /* 日期日历弹窗 */
+  .date-dropdown.calendar { width: 288px; padding: 14px; }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .cal-nav { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); background: var(--card-bg); color: var(--accent); font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all .15s; }
+  .cal-nav:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cal-title { font-size: 14px; font-weight: 700; color: var(--title); }
+  .cal-week { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 6px; }
+  .cal-week span { text-align: center; font-size: 11px; color: var(--text-secondary); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .cal-cell { min-height: 34px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; font-size: 12.5px; border-radius: 8px; color: #c2ccd4; cursor: default; position: relative; }
+  .cal-cell.empty { visibility: hidden; }
+  .cal-cell.has { color: var(--title); cursor: pointer; font-weight: 600; }
+  .cal-cell.has:hover { background: #6fa3c722; }
+  .cal-cell.has::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+  .cal-cell.sel { background: var(--accent); color: #fff; }
+  .cal-cell.sel::after { background: #fff; }
+  .cal-cell.sel:hover { background: var(--accent); }
+  .cal-foot { margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--border); font-size: 11px; color: var(--text-secondary); text-align: center; }
 </style>
 </head>
 <body>
@@ -197,7 +216,7 @@
         <span id="dateLabel">—</span>
         <span class="arrow">▾</span>
       </div>
-      <div class="date-dropdown" id="dateDropdown"></div>
+      <div class="date-dropdown calendar" id="dateDropdown"></div>
     </div>
     <button class="date-nav" id="nextBtn" title="后一天">›</button>
   </div>
@@ -335,7 +354,9 @@
     current = idx;
 
     // 日期选择器
-    $('#dateLabel').textContent = d.label;
+    const rel = relLabel(d.id);
+    $('#dateLabel').textContent = d.label + (rel ? ' · ' + rel : '');
+    if (picker.classList.contains('open')) renderCalendar();
     $('#prevBtn').disabled = idx === 0;
     $('#nextBtn').disabled = idx === DATA.dates.length - 1;
     document.querySelectorAll('#dateDropdown .opt').forEach((el, i) => {
@@ -436,34 +457,73 @@
     document.body.removeChild(ta);
   }
 
-  // 日期下拉
+  // ===== 日期日历弹窗 =====
   const picker = $('#datePicker');
+  const dd = $('#dateDropdown');
+
+  function relLabel(id) {
+    const t = new Date(); t.setHours(0, 0, 0, 0);
+    const d = new Date(id + 'T00:00:00');
+    const diff = Math.round((t - d) / 86400000);
+    if (diff === 0) return '今天';
+    if (diff === 1) return '昨天';
+    if (diff === -1) return '明天';
+    return '';
+  }
+
+  const reportMap = {};
+  DATA.dates.forEach((d, i) => { reportMap[d.id] = i; });
+  const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+  let calDate = new Date(DATA.dates[current].id + 'T00:00:00');
+
+  function renderCalendar() {
+    const y = calDate.getFullYear();
+    const m = calDate.getMonth();
+    let html = '<div class="cal-head">'
+      + '<button class="cal-nav" id="calPrev">‹</button>'
+      + '<div class="cal-title">' + y + '年' + (m + 1) + '月</div>'
+      + '<button class="cal-nav" id="calNext">›</button></div>';
+    html += '<div class="cal-week">' + WEEK.map(w => '<span>' + w + '</span>').join('') + '</div>';
+    html += '<div class="cal-grid">';
+    const startPad = new Date(y, m, 1).getDay();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    for (let i = 0; i < startPad; i++) html += '<div class="cal-cell empty"></div>';
+    for (let day = 1; day <= daysInMonth; day++) {
+      const id = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+      const has = (id in reportMap);
+      const sel = (id === DATA.dates[current].id);
+      const cls = 'cal-cell' + (has ? ' has' : '') + (sel ? ' sel' : '');
+      html += '<div class="' + cls + '"' + (has ? ' data-id="' + id + '"' : '') + '>' + day + '</div>';
+    }
+    html += '</div>';
+    const total = Object.keys(reportMap).length;
+    html += '<div class="cal-foot">蓝点 = 有日报 · 共 ' + total + ' 天可查 · ‹ › 切换相邻日</div>';
+    dd.innerHTML = html;
+    document.getElementById('calPrev').addEventListener('click', (e) => { e.stopPropagation(); calDate.setMonth(calDate.getMonth() - 1); renderCalendar(); });
+    document.getElementById('calNext').addEventListener('click', (e) => { e.stopPropagation(); calDate.setMonth(calDate.getMonth() + 1); renderCalendar(); });
+    dd.querySelectorAll('.cal-cell.has').forEach(cell => {
+      cell.addEventListener('click', (e) => {
+        e.stopPropagation();
+        renderDate(reportMap[cell.getAttribute('data-id')]);
+        picker.classList.remove('open');
+      });
+    });
+  }
+
   $('#dateBtn').addEventListener('click', (e) => {
     e.stopPropagation();
+    const willOpen = !picker.classList.contains('open');
     picker.classList.toggle('open');
+    if (willOpen) {
+      calDate = new Date(DATA.dates[current].id + 'T00:00:00');
+      renderCalendar();
+    }
   });
   document.addEventListener('click', (e) => {
     if (!picker.contains(e.target)) picker.classList.remove('open');
   });
   $('#prevBtn').addEventListener('click', () => { if (current > 0) renderDate(current - 1); });
   $('#nextBtn').addEventListener('click', () => { if (current < DATA.dates.length - 1) renderDate(current + 1); });
-
-  // 填充下拉
-  const dd = $('#dateDropdown');
-  DATA.dates.forEach((d, i) => {
-    const opt = document.createElement('div');
-    opt.className = 'opt' + (i === current ? ' active' : '');
-    opt.innerHTML = `<span>${d.label}</span><span class="tag">${d.tag || ''}</span>`;
-    opt.addEventListener('click', () => {
-      renderDate(i);
-      picker.classList.remove('open');
-    });
-    dd.appendChild(opt);
-  });
-  const hint = document.createElement('div');
-  hint.className = 'hint';
-  hint.textContent = '点击日期可展开选择 · ‹ › 切换相邻日';
-  dd.appendChild(hint);
 
   renderDate(current);
 </script>
