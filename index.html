@@ -66,6 +66,26 @@
   }
   .header-card .subtitle { color: var(--text-secondary); font-size: 13.5px; margin-top: 10px; letter-spacing: .02em; font-weight: 400; }
 
+  /* 下滑收起的小顶部栏 */
+  .sticky-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    background: rgba(255,255,255,0.82);
+    -webkit-backdrop-filter: saturate(180%) blur(12px); backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-100%); transition: transform .28s ease;
+    display: flex; justify-content: center;
+  }
+  .sticky-bar.show { transform: translateY(0); }
+  .sb-inner { width: 100%; max-width: 920px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 10px 28px; }
+  .sb-label {
+    font-size: 14px; font-weight: 600; color: var(--title); cursor: pointer;
+    padding: 5px 12px; border-radius: 9px; display: inline-flex; align-items: center; gap: 8px;
+    transition: background .15s;
+  }
+  .sb-label:hover { background: var(--bg); }
+  .sb-label .cal { color: var(--accent); }
+  .sb-label .cal svg { width: 17px; height: 17px; }
+
   .date-row {
     display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px;
     position: relative;
@@ -231,6 +251,13 @@
 </head>
 <body>
 <div class="topbar"></div>
+<div class="sticky-bar" id="stickyBar">
+  <div class="sb-inner">
+    <button class="date-nav" id="sbPrev" title="前一天"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <div class="sb-label" id="sbLabel" title="回到顶部查看完整日历"><span class="cal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3v3.5M16 3v3.5"/><path d="M8 13h.5M11.5 13h.5M15 13h.5M8 16.3h.5M11.5 16.3h.5M15 16.3h.5"/></svg></span><span id="sbDateLabel">—</span></div>
+    <button class="date-nav" id="sbNext" title="后一天"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+</div>
 
 <div class="header-card">
   <h1><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5M9.5 8.5h1.5"/></svg></span>每日工作总结报告</h1>
@@ -292,6 +319,7 @@
     // 日期选择器
     const rel = relLabel(d.id);
     $('#dateLabel').textContent = d.label + (rel ? ' · ' + rel : '');
+    const sbL = document.getElementById('sbDateLabel'); if (sbL) sbL.textContent = d.label + (rel ? ' · ' + rel : '');
     if (picker.classList.contains('open')) renderCalendar();
     $('#prevBtn').disabled = idx === 0;
     $('#nextBtn').disabled = idx === DATA.dates.length - 1;
@@ -460,6 +488,15 @@
   });
   $('#prevBtn').addEventListener('click', () => { if (current > 0) renderDate(current - 1); });
   $('#nextBtn').addEventListener('click', () => { if (current < DATA.dates.length - 1) renderDate(current + 1); });
+
+  // 下滑收起的小顶部栏
+  const stickyBar = document.getElementById('stickyBar');
+  function onScroll() { if (stickyBar) stickyBar.classList.toggle('show', window.scrollY > 200); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  document.getElementById('sbPrev').addEventListener('click', () => { if (current > 0) renderDate(current - 1); });
+  document.getElementById('sbNext').addEventListener('click', () => { if (current < DATA.dates.length - 1) renderDate(current + 1); });
+  document.getElementById('sbLabel').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   renderDate(current);
 </script>
