@@ -33,9 +33,19 @@
     --radius: 26px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html {
+    background:
+      radial-gradient(820px 560px at 6% 4%, rgba(124,177,210,0.30), transparent 60%),
+      radial-gradient(760px 560px at 96% 14%, rgba(255,230,190,0.32), transparent 60%),
+      radial-gradient(900px 680px at 52% 108%, rgba(235,188,194,0.26), transparent 62%),
+      radial-gradient(680px 480px at 82% 96%, rgba(184,208,229,0.30), transparent 60%),
+      linear-gradient(180deg, #EAF1F8 0%, #EEF4F9 100%);
+    min-height: 100vh;
+  }
+
   body {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 320px, var(--bg) 100%);
+    background: transparent;
     color: var(--text);
     line-height: 1.65;
     padding: 0 28px 56px;
@@ -52,9 +62,9 @@
 
   /* 头部 */
   .header-card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 32px;
+    background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: 32px;
     padding: 34px 28px 28px; text-align: center; margin-bottom: 40px;
-    box-shadow: 0 1px 3px rgba(43,60,80,0.04);
+    -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .header-card h1 {
     font-size: 30px; font-weight: 700; color: var(--title);
@@ -138,27 +148,28 @@
   /* 统计卡片 */
   .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; margin-bottom: 44px; }
   .stat-card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+    background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius);
     padding: 22px 18px; text-align: center; position: relative;
+    box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .stat-card .label { font-size: 11.5px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; font-weight: 600; }
   .stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--title); }
-  .stat-card.c-blue { background: #E8F1F7; border-color: #C5DCEB; }
+  .stat-card.c-blue { background: rgba(124,177,210,0.20); border-color: rgba(124,177,210,0.45); }
   .stat-card.c-blue .value { color: #6A9FC0; }
-  .stat-card.c-sky { background: #DEEAF3; border-color: #B8D0E5; }
+  .stat-card.c-sky { background: rgba(184,208,229,0.24); border-color: rgba(184,208,229,0.55); }
   .stat-card.c-sky .value { color: #6A9FC0; }
-  .stat-card.c-pink { background: #F7E1E8; border-color: #EBBCC2; }
+  .stat-card.c-pink { background: rgba(235,188,194,0.22); border-color: rgba(235,188,194,0.55); }
   .stat-card.c-pink .value { color: #C98AAA; }
-  .stat-card.c-peach { background: #FFF4DB; border-color: #FFE6BE; }
+  .stat-card.c-peach { background: rgba(255,230,190,0.28); border-color: rgba(240,210,158,0.6); }
   .stat-card.c-peach .value { color: #E0A85A; }
 
   /* 区块标题 */
   .section { margin-bottom: 44px; }
   .section-head {
     display: flex; align-items: center; gap: 11px;
-    background: #E1EDF6; border: 1px solid #7CB1D255; border-radius: 22px;
+    background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: 22px;
     padding: 13px 18px; margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(124,177,210,0.08);
+    box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .section-head .si { color: var(--accent); display: inline-flex; }
   .section-head .si svg { width: 19px; height: 19px; }
@@ -167,7 +178,7 @@
   .section-head.pink .si { color: var(--teal); }
 
   /* 时间线 - 项目段 */
-  .seg { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; }
+  .seg { background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6); }
   .seg-head {
     display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; user-select: none; transition: background .15s;
   }
@@ -204,16 +215,16 @@
   .tl-body .d { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
 
   .gap-card {
-    background: #FFF4DB; border: 1px solid #F0D29E; border-radius: 16px;
+    background: rgba(255,230,190,0.30); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(240,210,158,0.6); border-radius: 16px;
     padding: 14px 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px;
-    box-shadow: 0 2px 8px rgba(224,168,90,0.08);
+    box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .gap-card .gi { color: var(--orange); }
   .gap-card .gt { font-size: 13px; font-weight: 600; color: var(--orange); }
   .gap-card .gd { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
 
   /* 工作清单 */
-  .checklist-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+  .checklist-wrap { background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius); padding: 20px 22px; box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6); }
   .checklist-wrap.pink .checklist-head .ct svg { color: var(--teal); }
   .checklist-wrap.pink .copy-btn { background: var(--teal); }
   .checklist-wrap.pink pre#checklistPre { background: #F9ECF1; border-color: #EBBCC2; }
