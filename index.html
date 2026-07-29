@@ -130,14 +130,14 @@
   .date-picker.open .date-btn .arrow { transform: rotate(180deg); }
 
   .date-dropdown {
-    position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) scale(0.96) translateY(-8px);
+    position: fixed; left: 0; top: 0; transform: translateX(-50%) scale(0.96) translateY(-8px);
     background: rgba(255,255,255,0.62); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); border: 1px solid rgba(255,255,255,0.7); border-radius: 22px;
-    box-shadow: 0 12px 40px rgba(40,60,80,0.14); padding: 8px; min-width: 230px; z-index: 50;
+    box-shadow: 0 12px 40px rgba(40,60,80,0.14); padding: 8px; min-width: 230px; z-index: 100;
     display: block; visibility: hidden; opacity: 0; pointer-events: none;
     max-height: 320px; overflow-y: auto;
     transition: opacity .26s cubic-bezier(.4,0,.2,1), transform .26s cubic-bezier(.4,0,.2,1), visibility .26s;
   }
-  .date-picker.open .date-dropdown { visibility: visible; opacity: 1; transform: translateX(-50%) scale(1) translateY(0); pointer-events: auto; }
+  .date-dropdown.open { visibility: visible; opacity: 1; transform: translateX(-50%) scale(1) translateY(0); pointer-events: auto; }
   .date-dropdown .opt {
     padding: 10px 14px; border-radius: 9px; cursor: pointer; font-size: 14px; color: var(--text);
     display: flex; align-items: center; justify-content: space-between; transition: background .12s;
@@ -319,7 +319,6 @@
         <span id="dateLabel">—</span>
         <span class="arrow"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
       </div>
-      <div class="date-dropdown calendar" id="dateDropdown"></div>
     </div>
     <button class="date-nav" id="nextBtn" title="后一天"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
   </div>
@@ -523,22 +522,35 @@
         e.stopPropagation();
         renderDate(reportMap[cell.getAttribute('data-id')]);
         picker.classList.remove('open');
+        dd.classList.remove('open');
       });
     });
   }
 
+  function positionDropdown() {
+    const r = $('#dateBtn').getBoundingClientRect();
+    dd.style.left = (r.left + r.width / 2) + 'px';
+    dd.style.top = (r.bottom + 10) + 'px';
+  }
   $('#dateBtn').addEventListener('click', (e) => {
     e.stopPropagation();
     const willOpen = !picker.classList.contains('open');
     picker.classList.toggle('open');
+    dd.classList.toggle('open');
     if (willOpen) {
       calDate = new Date(DATA.dates[current].id + 'T00:00:00');
+      positionDropdown();
       renderCalendar();
     }
   });
   document.addEventListener('click', (e) => {
-    if (!picker.contains(e.target)) picker.classList.remove('open');
+    if (!picker.contains(e.target) && !dd.contains(e.target)) {
+      picker.classList.remove('open');
+      dd.classList.remove('open');
+    }
   });
+  window.addEventListener('scroll', () => { if (dd.classList.contains('open')) positionDropdown(); }, true);
+  window.addEventListener('resize', () => { if (dd.classList.contains('open')) positionDropdown(); });
   $('#prevBtn').addEventListener('click', () => { if (current > 0) renderDate(current - 1); });
   $('#nextBtn').addEventListener('click', () => { if (current < DATA.dates.length - 1) renderDate(current + 1); });
 
