@@ -421,18 +421,10 @@
     $('#reportView').innerHTML = `
       ${noteHtml}
       <div class="stats-row">
-        <div class="stat-card c-blue"><div class="label">最早活动</div><div class="value">${s.start}</div></div>
-        <div class="stat-card c-sky"><div class="label">最后活动</div><div class="value">${s.end}</div></div>
+        <div class="stat-card c-blue"><div class="label">到岗 · 企业微信</div><div class="value">${fmtRoutine(r.wecomOpen)}</div></div>
+        <div class="stat-card c-sky"><div class="label">收工 · 上次关机</div><div class="value">${fmtRoutine(r.lastShutdown)}</div></div>
         <div class="stat-card c-pink"><div class="label">真实时长</div><div class="value">${s.real}</div></div>
         <div class="stat-card c-peach"><div class="label">空白/补齐</div><div class="value">${s.gaps}</div></div>
-      </div>
-
-      <div class="section">
-        <div class="section-head"><span class="si">${ic('clock')}</span><span class="st">作息信号</span><span class="sm">到岗 · 收工</span></div>
-        <div class="stats-row" style="margin-bottom:0">
-          <div class="stat-card c-blue"><div class="label">到岗 · 企业微信</div><div class="value">${fmtRoutine(r.wecomOpen)}</div></div>
-          <div class="stat-card c-pink"><div class="label">收工 · 上次关机</div><div class="value">${fmtRoutine(r.lastShutdown)}</div></div>
-        </div>
       </div>
 
       <div class="section">
