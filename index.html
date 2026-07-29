@@ -168,11 +168,10 @@
   /* 时间线 - 项目段 */
   .seg { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; }
   .seg-head {
-    display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; user-select: none;
-    border-left: 3px solid var(--accent); transition: background .15s;
+    display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; user-select: none; transition: background .15s;
   }
   .seg-head:hover { background: rgba(124,177,210,0.06); }
-  .seg.fill .seg-head { border-left-color: var(--orange); background: #FFE6BE26; }
+  .seg.fill .seg-head { background: #FFE6BE26; }
   .seg.fill .seg-head:hover { background: #FFE6BE33; }
   .seg-head .seg-ico { color: var(--accent); }
   .seg.fill .seg-head .seg-ico { color: var(--orange); }
@@ -212,8 +211,7 @@
   .gap-card .gd { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
 
   /* 工作清单 */
-  .checklist-wrap { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; }
-  .checklist-wrap.pink { border-left-color: var(--teal); }
+  .checklist-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
   .checklist-wrap.pink .checklist-head .ct svg { color: var(--teal); }
   .checklist-wrap.pink .copy-btn { background: var(--teal); }
   .checklist-wrap.pink pre#checklistPre { background: #F9ECF1; border-color: #EBBCC2; }
