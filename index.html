@@ -178,13 +178,15 @@
   .section-head.pink .si { color: var(--teal); }
 
   /* 时间线 - 项目段 */
-  .seg { background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6); }
+  .seg { background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6); transition: transform .32s cubic-bezier(.2,.8,.2,1), box-shadow .3s; }
   .seg-head {
-    display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; user-select: none; transition: background .15s;
+    display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; user-select: none; transition: background .15s, transform .14s cubic-bezier(.2,.8,.2,1);
   }
   .seg-head:hover { background: rgba(124,177,210,0.06); }
+  .seg-head:active { transform: scale(0.975); }
   .seg.fill .seg-head { background: #FFE6BE26; }
   .seg.fill .seg-head:hover { background: #FFE6BE33; }
+  .seg.fill .seg-head:active { transform: scale(0.975); }
   .seg-head .seg-ico { color: var(--accent); }
   .seg.fill .seg-head .seg-ico { color: var(--orange); }
   .seg-head .seg-name { font-size: 14.5px; font-weight: 600; color: var(--title); flex: 1; letter-spacing: .01em; }
@@ -192,8 +194,10 @@
   .seg-head .seg-time { font-size: 12px; color: var(--text-secondary); }
   .seg-head .arrow { color: var(--text-secondary); transition: transform .2s; }
   .seg.collapsed .arrow { transform: rotate(-90deg); }
-  .seg-body { padding: 4px 20px 18px; }
-  .seg.collapsed .seg-body { display: none; }
+  .seg-body { padding: 4px 20px 18px; overflow: hidden; max-height: 2600px; opacity: 1; transform: translateY(0); transition: max-height .42s cubic-bezier(.2,.8,.2,1), opacity .32s ease, transform .32s ease, padding .32s ease; will-change: max-height, opacity; }
+  .seg.collapsed .seg-body { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; transform: translateY(-10px); }
+  @keyframes segPop { 0% { transform: scale(1); } 45% { transform: scale(1.012); } 100% { transform: scale(1); } }
+  .seg.tapping { animation: segPop .4s cubic-bezier(.34,1.4,.64,1); }
 
   .tl-item { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #eef1f4; }
   .tl-item:last-child { border-bottom: none; }
@@ -437,7 +441,11 @@
   }
 
   function toggleSeg(head) {
-    head.closest('.seg').classList.toggle('collapsed');
+    const seg = head.closest('.seg');
+    seg.classList.toggle('collapsed');
+    seg.classList.remove('tapping');
+    void seg.offsetWidth;
+    seg.classList.add('tapping');
   }
 
   function copyChecklist() {
