@@ -30,7 +30,7 @@
     --teal: #C98AAA;
     --pink: #c79aae;
     --shadow: 0 1px 3px rgba(43,60,80,0.05);
-    --radius: 22px;
+    --radius: 26px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -52,7 +52,7 @@
 
   /* 头部 */
   .header-card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 32px;
     padding: 34px 28px 28px; text-align: center; margin-bottom: 40px;
     box-shadow: 0 1px 3px rgba(43,60,80,0.04);
   }
@@ -120,7 +120,7 @@
 
   .date-dropdown {
     position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 22px;
     box-shadow: 0 12px 40px rgba(40,60,80,0.14); padding: 8px; min-width: 230px; z-index: 50;
     display: none; max-height: 320px; overflow-y: auto;
   }
@@ -143,20 +143,20 @@
   }
   .stat-card .label { font-size: 11.5px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; font-weight: 600; }
   .stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--title); }
-  .stat-card.c-blue { background: #7CB1D236; border-color: #7CB1D24d; }
-  .stat-card.c-blue .value { color: #3E7CA0; }
-  .stat-card.c-sky { background: #B8D0E5; border-color: #B8D0E5; }
-  .stat-card.c-sky .value { color: #4A7BA0; }
-  .stat-card.c-pink { background: #EBBCC2; border-color: #EBBCC2; }
-  .stat-card.c-pink .value { color: #B0628A; }
-  .stat-card.c-peach { background: #FFE6BE; border-color: #FFE6BE; }
-  .stat-card.c-peach .value { color: #C8852E; }
+  .stat-card.c-blue { background: #E8F1F7; border-color: #C5DCEB; }
+  .stat-card.c-blue .value { color: #6A9FC0; }
+  .stat-card.c-sky { background: #DEEAF3; border-color: #B8D0E5; }
+  .stat-card.c-sky .value { color: #6A9FC0; }
+  .stat-card.c-pink { background: #F7E1E8; border-color: #EBBCC2; }
+  .stat-card.c-pink .value { color: #C98AAA; }
+  .stat-card.c-peach { background: #FFF4DB; border-color: #FFE6BE; }
+  .stat-card.c-peach .value { color: #E0A85A; }
 
   /* 区块标题 */
   .section { margin-bottom: 44px; }
   .section-head {
     display: flex; align-items: center; gap: 11px;
-    background: var(--accent-tint); border: 1px solid #7CB1D22e; border-radius: 18px;
+    background: var(--accent-tint); border: 1px solid #7CB1D22e; border-radius: 22px;
     padding: 13px 18px; margin-bottom: 16px;
   }
   .section-head .si { color: var(--accent); display: inline-flex; }
@@ -213,6 +213,10 @@
 
   /* 工作清单 */
   .checklist-wrap { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; }
+  .checklist-wrap.pink { border-left-color: var(--teal); }
+  .checklist-wrap.pink .checklist-head .ct svg { color: var(--teal); }
+  .checklist-wrap.pink .copy-btn { background: var(--teal); }
+  .checklist-wrap.pink pre#checklistPre { background: #F9ECF1; border-color: #EBBCC2; }
   .checklist-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .checklist-head .ct { font-size: 14.5px; font-weight: 600; color: var(--title); display: flex; align-items: center; gap: 8px; letter-spacing: .01em; }
   .copy-btn {
@@ -223,7 +227,7 @@
   .copy-btn:hover { filter: brightness(1.06); }
   .copy-btn.done { background: var(--green); }
   pre#checklistPre {
-    background: #f6f8fa; border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px;
+    background: #f6f8fa; border: 1px solid var(--border); border-radius: 20px; padding: 16px 18px;
     font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 13.5px; line-height: 1.9;
     color: var(--title); white-space: pre-wrap; word-break: break-all;
   }
@@ -235,7 +239,7 @@
 
   .footer { text-align: center; padding: 24px; color: var(--text-secondary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 24px; }
 
-  .note-banner { background: #FFE6BE1a; border: 1px solid #E0A85A40; border-radius: 16px; padding: 13px 18px; margin-bottom: 26px; font-size: 13px; color: #B8832F; display: flex; align-items: flex-start; }
+  .note-banner { background: #FFE6BE1a; border: 1px solid #E0A85A40; border-radius: 20px; padding: 13px 18px; margin-bottom: 26px; font-size: 13px; color: #B8832F; display: flex; align-items: flex-start; }
 
   /* 线性 SVG 图标系统 */
   .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: -0.14em; }
@@ -403,7 +407,7 @@
 
       <div class="section">
         <div class="section-head pink"><span class="si">${ic('list')}</span><span class="st">工作项清单</span></div>
-        <div class="checklist-wrap">
+        <div class="checklist-wrap pink">
           <div class="checklist-head">
             <div class="ct">${ic('list')} 当日工作项</div>
             <button class="copy-btn" id="copyBtn" onclick="copyChecklist()" title="复制清单">${ic('copy')}</button>
