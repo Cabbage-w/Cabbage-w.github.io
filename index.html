@@ -357,6 +357,13 @@
     chart: '<path d="M4 20V4M4 20h16"/><rect x="7" y="12" width="3" height="5"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="5" width="3" height="12"/>'
   };
   function ic(name) { return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>'; }
+  function fmtRoutine(ts) {
+    if (!ts) return '—';
+    const datePart = ts.slice(0, 10), timePart = ts.slice(11, 16);
+    const t = new Date();
+    const today = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+    return (datePart === today) ? timePart : (datePart.slice(5) + ' ' + timePart);
+  }
   const SEG_ICON = { '\u{1F4AC}':'chat', '\u{1F3A8}':'palette', '\u{1F37D}\u{FE0F}':'food', '\u{1F512}':'lock', '\u{1F9EA}':'lab', '\u{1F4DA}':'book', '\u{1F4CA}':'chart', '\u{1F4CB}':'copy', '\u{1F4DD}':'list', '\u{26A0}\u{FE0F}':'warn' };
   function segIco(emoji) { const k = SEG_ICON[emoji]; return k ? ic(k) : '<span class="seg-emoji">'+emoji+'</span>'; }
 
@@ -364,6 +371,7 @@
   function renderDate(idx) {
     const d = DATA.dates[idx];
     current = idx;
+    const r = d.routine || {};
 
     // 日期选择器
     const rel = relLabel(d.id);
@@ -417,6 +425,14 @@
         <div class="stat-card c-sky"><div class="label">最后活动</div><div class="value">${s.end}</div></div>
         <div class="stat-card c-pink"><div class="label">真实时长</div><div class="value">${s.real}</div></div>
         <div class="stat-card c-peach"><div class="label">空白/补齐</div><div class="value">${s.gaps}</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><span class="si">${ic('clock')}</span><span class="st">作息信号</span><span class="sm">到岗 · 收工</span></div>
+        <div class="stats-row" style="margin-bottom:0">
+          <div class="stat-card c-blue"><div class="label">到岗 · 企业微信</div><div class="value">${fmtRoutine(r.wecomOpen)}</div></div>
+          <div class="stat-card c-pink"><div class="label">收工 · 上次关机</div><div class="value">${fmtRoutine(r.lastShutdown)}</div></div>
+        </div>
       </div>
 
       <div class="section">
