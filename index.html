@@ -12,8 +12,8 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
   :root {
-    --bg: #f3f5f7;
-    --bg-top: #e9eff5;
+    --bg: #EAF1F8;
+    --bg-top: #DCE8F2;
     --card-bg: #ffffff;
     --border: #e6eaee;
     --border-strong: #dbe2e8;
@@ -143,10 +143,14 @@
   }
   .stat-card .label { font-size: 11.5px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; font-weight: 600; }
   .stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--title); }
-  .stat-card .value.green { color: var(--green); }
-  .stat-card .value.orange { color: var(--orange); }
-  .stat-card .value.blue { color: var(--accent); }
-  .stat-card .value.purple { color: var(--purple); }
+  .stat-card.c-blue { background: #7CB1D236; border-color: #7CB1D24d; }
+  .stat-card.c-blue .value { color: #3E7CA0; }
+  .stat-card.c-sky { background: #B8D0E5; border-color: #B8D0E5; }
+  .stat-card.c-sky .value { color: #4A7BA0; }
+  .stat-card.c-pink { background: #EBBCC2; border-color: #EBBCC2; }
+  .stat-card.c-pink .value { color: #B0628A; }
+  .stat-card.c-peach { background: #FFE6BE; border-color: #FFE6BE; }
+  .stat-card.c-peach .value { color: #C8852E; }
 
   /* 区块标题 */
   .section { margin-bottom: 44px; }
@@ -159,6 +163,7 @@
   .section-head .si svg { width: 19px; height: 19px; }
   .section-head .st { font-size: 16.5px; font-weight: 700; color: var(--title); letter-spacing: .01em; }
   .section-head .sm { margin-left: auto; font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
+  .section-head.pink .si { color: var(--teal); }
 
   /* 时间线 - 项目段 */
   .seg { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; }
@@ -385,10 +390,10 @@
     $('#reportView').innerHTML = `
       ${noteHtml}
       <div class="stats-row">
-        <div class="stat-card"><div class="label">最早活动</div><div class="value blue">${s.start}</div></div>
-        <div class="stat-card"><div class="label">最后活动</div><div class="value green">${s.end}</div></div>
-        <div class="stat-card"><div class="label">真实时长</div><div class="value green">${s.real}</div></div>
-        <div class="stat-card"><div class="label">空白/补齐</div><div class="value orange">${s.gaps}</div></div>
+        <div class="stat-card c-blue"><div class="label">最早活动</div><div class="value">${s.start}</div></div>
+        <div class="stat-card c-sky"><div class="label">最后活动</div><div class="value">${s.end}</div></div>
+        <div class="stat-card c-pink"><div class="label">真实时长</div><div class="value">${s.real}</div></div>
+        <div class="stat-card c-peach"><div class="label">空白/补齐</div><div class="value">${s.gaps}</div></div>
       </div>
 
       <div class="section">
@@ -397,7 +402,7 @@
       </div>
 
       <div class="section">
-        <div class="section-head"><span class="si">${ic('list')}</span><span class="st">工作项清单</span></div>
+        <div class="section-head pink"><span class="si">${ic('list')}</span><span class="st">工作项清单</span></div>
         <div class="checklist-wrap">
           <div class="checklist-head">
             <div class="ct">${ic('list')} 当日工作项</div>
