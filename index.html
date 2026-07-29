@@ -362,7 +362,7 @@
       });
       const segHtml = seg.lunch
         ? `<div class="gap-card${lunchCls}"><div class="gi">${segIco(seg.ico)}</div><div><div class="gt">${seg.events[0].time}</div><div class="gd">${seg.events[0].d}</div></div></div>`
-        : `<div class="seg${fillCls}">
+        : `<div class="seg${fillCls} collapsed">
             <div class="seg-head" onclick="toggleSeg(this)">
               <span class="seg-ico">${segIco(seg.ico)}</span>
               <span class="seg-name">${seg.title}</span>
