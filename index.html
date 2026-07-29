@@ -559,8 +559,9 @@
       dd.classList.remove('open');
     }
   });
-  window.addEventListener('scroll', () => { if (dd.classList.contains('open')) positionDropdown(); }, true);
-  window.addEventListener('resize', () => { if (dd.classList.contains('open')) positionDropdown(); });
+  function closeDateDropdown() { picker.classList.remove('open'); dd.classList.remove('open'); }
+  window.addEventListener('scroll', () => { if (dd.classList.contains('open')) closeDateDropdown(); }, { passive: true });
+  window.addEventListener('resize', () => { if (dd.classList.contains('open')) closeDateDropdown(); });
   $('#prevBtn').addEventListener('click', () => { if (current > 0) renderDate(current - 1); });
   $('#nextBtn').addEventListener('click', () => { if (current < DATA.dates.length - 1) renderDate(current + 1); });
 
