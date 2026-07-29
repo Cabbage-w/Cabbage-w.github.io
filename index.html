@@ -4,8 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>每日工作总结报告 · 汇总</title>
-<meta name="theme-color" content="#6fa3c7">
+<meta name="theme-color" content="#7CB1D2">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
   :root {
@@ -17,21 +20,21 @@
     --text: #3a444d;
     --text-secondary: #8b97a3;
     --title: #2b343b;
-    --accent: #5e93b8;
-    --accent-soft: #8fb0cc;
-    --accent-tint: #5e93b818;
+    --accent: #7CB1D2;
+    --accent-soft: #B8D0E5;
+    --accent-tint: #B8D0E526;
     --green: #7fae93;
-    --orange: #cf9f76;
+    --orange: #E0A85A;
     --red: #c98f8f;
     --purple: #a89ec6;
-    --teal: #5caaa3;
+    --teal: #C98AAA;
     --pink: #c79aae;
     --shadow: 0 1px 3px rgba(43,60,80,0.05);
-    --radius: 14px;
+    --radius: 22px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 320px, var(--bg) 100%);
     color: var(--text);
     line-height: 1.65;
@@ -42,14 +45,14 @@
   }
   .topbar {
     height: 4px;
-    background: linear-gradient(90deg, #5e93b8, #8fb0cc, #aecadf, #8fb0cc, #5e93b8);
+    background: linear-gradient(90deg, #7CB1D2, #B8D0E5, #D6E8F2, #B8D0E5, #7CB1D2);
     border-radius: 0 0 6px 6px;
     margin: 0 -28px 0;
   }
 
   /* 头部 */
   .header-card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px;
     padding: 34px 28px 28px; text-align: center; margin-bottom: 40px;
     box-shadow: 0 1px 3px rgba(43,60,80,0.04);
   }
@@ -106,18 +109,18 @@
 
   .date-picker { position: relative; }
   .date-btn {
-    background: var(--accent-tint); color: var(--accent); border: 1px solid #5e93b833;
+    background: var(--accent-tint); color: var(--accent); border: 1px solid #7CB1D233;
     padding: 9px 20px 9px 16px; border-radius: 24px; font-size: 14px; font-weight: 600;
     cursor: pointer; display: inline-flex; align-items: center; gap: 9px; transition: all .18s;
   }
-  .date-btn:hover { background: #5e93b826; }
+  .date-btn:hover { background: #7CB1D226; }
   .date-btn .cal { color: var(--accent); }
   .date-btn .arrow { transition: transform .2s; }
   .date-picker.open .date-btn .arrow { transform: rotate(180deg); }
 
   .date-dropdown {
     position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
     box-shadow: 0 12px 40px rgba(40,60,80,0.14); padding: 8px; min-width: 230px; z-index: 50;
     display: none; max-height: 320px; overflow-y: auto;
   }
@@ -149,7 +152,7 @@
   .section { margin-bottom: 44px; }
   .section-head {
     display: flex; align-items: center; gap: 11px;
-    background: var(--accent-tint); border: 1px solid #5e93b82e; border-radius: 12px;
+    background: var(--accent-tint); border: 1px solid #7CB1D22e; border-radius: 18px;
     padding: 13px 18px; margin-bottom: 16px;
   }
   .section-head .si { color: var(--accent); display: inline-flex; }
@@ -163,13 +166,13 @@
     display: flex; align-items: center; gap: 12px; padding: 16px 20px; cursor: pointer; user-select: none;
     border-left: 3px solid var(--accent); transition: background .15s;
   }
-  .seg-head:hover { background: rgba(94,147,184,0.05); }
-  .seg.fill .seg-head { border-left-color: var(--orange); background: #cf9f7614; }
-  .seg.fill .seg-head:hover { background: #cf9f761f; }
+  .seg-head:hover { background: rgba(124,177,210,0.06); }
+  .seg.fill .seg-head { border-left-color: var(--orange); background: #FFE6BE26; }
+  .seg.fill .seg-head:hover { background: #FFE6BE33; }
   .seg-head .seg-ico { color: var(--accent); }
   .seg.fill .seg-head .seg-ico { color: var(--orange); }
   .seg-head .seg-name { font-size: 14.5px; font-weight: 600; color: var(--title); flex: 1; letter-spacing: .01em; }
-  .seg.fill .seg-head .seg-name { color: #9c7b54; }
+  .seg.fill .seg-head .seg-name { color: #B8832F; }
   .seg-head .seg-time { font-size: 12px; color: var(--text-secondary); }
   .seg-head .arrow { color: var(--text-secondary); transition: transform .2s; }
   .seg.collapsed .arrow { transform: rotate(-90deg); }
@@ -182,12 +185,12 @@
   .tl-item.fill .tl-dot { background: var(--orange); }
   .tl-time { flex: 0 0 110px; font-size: 12px; font-weight: 700; color: var(--accent); padding-top: 1px; }
   .tl-item.fill .tl-time { color: var(--orange); }
-  .tl-item.fill .tl-body .t { background: #cf9f760f; border-color: #cf9f6444; border-left-color: var(--orange); color: #9c7b54; }
+  .tl-item.fill .tl-body .t { background: #FFE6BE1f; border-color: #E0A85A40; border-left-color: var(--orange); color: #B8832F; }
   .tl-body .t {
   font-size: 13.5px; font-weight: 600; color: #3c5b73;
   display: inline-block;
   background: var(--accent-tint);
-  border: 1px solid #5e93b833;
+  border: 1px solid #7CB1D233;
   border-left: 3px solid var(--accent-soft);
   border-radius: 8px;
   padding: 4px 11px;
@@ -196,7 +199,7 @@
   .tl-body .d { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
 
   .gap-card {
-    background: #cf9f7611; border: 1px dashed #cf9f6444; border-radius: 12px;
+    background: #FFE6BE1a; border: 1px dashed #E0A85A40; border-radius: 16px;
     padding: 14px 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px;
   }
   .gap-card .gi { color: var(--orange); }
@@ -209,13 +212,13 @@
   .checklist-head .ct { font-size: 14.5px; font-weight: 600; color: var(--title); display: flex; align-items: center; gap: 8px; letter-spacing: .01em; }
   .copy-btn {
     background: var(--accent); color: #fff; border: none;
-    padding: 8px 18px; border-radius: 22px; font-size: 13px; font-weight: 600; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 6px; transition: all .15s;
+    width: 38px; height: 38px; border-radius: 50%; font-size: 0; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; transition: all .15s;
   }
   .copy-btn:hover { filter: brightness(1.06); }
   .copy-btn.done { background: var(--green); }
   pre#checklistPre {
-    background: #f6f8fa; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
+    background: #f6f8fa; border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px;
     font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 13.5px; line-height: 1.9;
     color: var(--title); white-space: pre-wrap; word-break: break-all;
   }
@@ -223,11 +226,11 @@
   .scan-info { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 34px; }
   .scan-info h3 { font-size: 13.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; letter-spacing: .03em; text-transform: uppercase; }
   .scan-info ul { list-style: none; padding: 0; }
-  .scan-info li { font-size: 13px; color: var(--teal); padding: 4px 0; }
+  .scan-info li { font-size: 13px; color: var(--text-secondary); padding: 4px 0; }
 
   .footer { text-align: center; padding: 24px; color: var(--text-secondary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 24px; }
 
-  .note-banner { background: #cf9f7611; border: 1px solid #cf9f6444; border-radius: 12px; padding: 13px 18px; margin-bottom: 26px; font-size: 13px; color: #9c7b54; display: flex; align-items: flex-start; }
+  .note-banner { background: #FFE6BE1a; border: 1px solid #E0A85A40; border-radius: 16px; padding: 13px 18px; margin-bottom: 26px; font-size: 13px; color: #B8832F; display: flex; align-items: flex-start; }
 
   /* 线性 SVG 图标系统 */
   .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: -0.14em; }
@@ -243,7 +246,7 @@
   .checklist-head .ct svg { width: 17px; height: 17px; color: var(--accent); }
   .scan-info li { display: flex; align-items: center; }
   .scan-info li svg { width: 14px; height: 14px; stroke: var(--teal); stroke-width: 2.2; margin-right: 6px; flex: 0 0 14px; }
-  .note-banner svg { width: 15px; height: 15px; stroke: #b8895a; stroke-width: 1.9; margin-right: 6px; flex: 0 0 15px; margin-top: 1px; }
+  .note-banner svg { width: 15px; height: 15px; stroke: #E0A85A; stroke-width: 1.9; margin-right: 6px; flex: 0 0 15px; margin-top: 1px; }
   .gap-card .gi svg { width: 18px; height: 18px; stroke: var(--orange); }
   .seg-emoji { font-size: 17px; }
 
@@ -394,11 +397,11 @@
       </div>
 
       <div class="section">
-        <div class="section-head"><span class="si">${ic('list')}</span><span class="st">工作项清单</span><span class="sm">可一键复制</span></div>
+        <div class="section-head"><span class="si">${ic('list')}</span><span class="st">工作项清单</span></div>
         <div class="checklist-wrap">
           <div class="checklist-head">
             <div class="ct">${ic('list')} 当日工作项</div>
-            <button class="copy-btn" id="copyBtn" onclick="copyChecklist()">${ic('copy')} 复制清单</button>
+            <button class="copy-btn" id="copyBtn" onclick="copyChecklist()" title="复制清单">${ic('copy')}</button>
           </div>
           <pre id="checklistPre">${checklist}</pre>
         </div>
@@ -421,9 +424,9 @@
     const text = document.getElementById('checklistPre').textContent;
     const btn = document.getElementById('copyBtn');
     const done = () => {
-      btn.innerHTML = ic('check') + ' 已复制';
+      btn.innerHTML = ic('check');
       btn.classList.add('done');
-      setTimeout(() => { btn.innerHTML = ic('copy') + ' 复制清单'; btn.classList.remove('done'); }, 1500);
+      setTimeout(() => { btn.innerHTML = ic('copy'); btn.classList.remove('done'); }, 1500);
     };
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
