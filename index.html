@@ -277,6 +277,23 @@
 
   .note-banner { background: #FFE6BE1a; border: 1px solid #E0A85A40; border-radius: 20px; padding: 13px 18px; margin-bottom: 26px; font-size: 13px; color: #B8832F; display: flex; align-items: flex-start; }
 
+  /* 日报空状态 */
+  .empty-state {
+    background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius);
+    padding: 50px 28px; text-align: center;
+    box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+    margin-bottom: 44px;
+  }
+  .empty-state .es-icon { color: var(--accent); margin-bottom: 18px; display: inline-flex; }
+  .empty-state .es-icon svg { width: 56px; height: 56px; stroke-width: 1.5; }
+  .empty-state h3 { font-size: 20px; font-weight: 700; color: var(--title); margin-bottom: 10px; letter-spacing: .01em; }
+  .empty-state p { font-size: 14px; color: var(--text-secondary); margin-bottom: 18px; }
+  .empty-state .es-meta { font-size: 12.5px; color: var(--text-secondary); background: var(--accent-tint); border-radius: 20px; padding: 8px 16px; display: inline-block; margin-bottom: 22px; }
+  .empty-state .es-btn { background: var(--accent); color: #fff; border: none; border-radius: 22px; padding: 11px 26px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s cubic-bezier(.4,0,.2,1); box-shadow: 0 6px 18px rgba(124,177,210,0.35); }
+  .empty-state .es-btn:hover { filter: brightness(1.06); transform: translateY(-2px); }
+  .empty-state .es-btn:active { transform: scale(.97); }
+
   /* 线性 SVG 图标系统 */
   .ic { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: -0.14em; }
   .header-card .ico { color: var(--accent); }
@@ -461,7 +478,8 @@
     lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
     lab: '<path d="M9 3v6l-4 8a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 17l-4-8V3"/><path d="M8 3h8M7.5 14h9"/>',
     book: '<path d="M4 5a2 2 0 0 1 2-2h5v16H6a2 2 0 0 0-2 2z"/><path d="M20 5a2 2 0 0 0-2-2h-5v16h5a2 2 0 0 1 2 2z"/>',
-    chart: '<path d="M4 20V4M4 20h16"/><rect x="7" y="12" width="3" height="5"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="5" width="3" height="12"/>'
+    chart: '<path d="M4 20V4M4 20h16"/><rect x="7" y="12" width="3" height="5"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="5" width="3" height="12"/>',
+    coffee: '<path d="M18 8h2a2 2 0 0 1 0 4h-2"/><path d="M4 8h14v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M8 2v3M12 2v3M16 2v3"/>'
   };
   function ic(name) { return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>'; }
   function fmtRoutine(ts) {
@@ -476,6 +494,7 @@
     const d = DATA.dates[idx];
     current = idx;
     const r = d.routine || {};
+    const noteHtml = d.note ? `<div class="note-banner">${ic('warn')} <span>${d.note}</span></div>` : '';
 
     // 日期选择器
     const rel = relLabel(d.id);
@@ -490,6 +509,27 @@
 
     // 统计卡片
     const s = d.stats;
+    const isEmpty = !d.segments || d.segments.length === 0 || !d.checklist || d.checklist.length === 0;
+    if (isEmpty) {
+      $('#reportView').innerHTML = `
+        ${noteHtml}
+        <div class="stats-row">
+          <div class="stat-card c-blue"><div class="label">到岗 · 企业微信</div><div class="value">${fmtRoutine(r.wecomOpen)}</div></div>
+          <div class="stat-card c-sky"><div class="label">收工 · 当日关机</div><div class="value">${fmtRoutine(r.lastShutdown)}</div></div>
+          <div class="stat-card c-pink"><div class="label">真实时长</div><div class="value">—</div></div>
+          <div class="stat-card c-peach"><div class="label">空白/补齐</div><div class="value">—</div></div>
+        </div>
+        <div class="empty-state">
+          <div class="es-icon">${ic('coffee')}</div>
+          <h3>今日总结还在路上</h3>
+          <p>今天的日报还没生成，先去喝杯咖啡吧 ☕️</p>
+          <div class="es-meta">每日 17:50 左右自动汇总生成，请稍后再来～</div>
+          <button class="es-btn" onclick="setView('trend')">看看趋势</button>
+        </div>
+      `;
+      $('#footerView').textContent = d.footer || '';
+      return;
+    }
     let segsHtml = '';
     d.segments.forEach((seg) => {
       const fillCls = seg.fill ? ' fill' : '';
@@ -520,7 +560,6 @@
     const checklist = d.checklist.join('\n');
 
     const scanHtml = d.scanInfo.map((x) => `<li>${ic('check')}${x}</li>`).join('');
-    const noteHtml = d.note ? `<div class="note-banner">${ic('warn')} <span>${d.note}</span></div>` : '';
 
     $('#reportView').innerHTML = `
       ${noteHtml}
