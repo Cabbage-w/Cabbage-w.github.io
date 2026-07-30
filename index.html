@@ -153,23 +153,27 @@
   .date-dropdown .opt.active .tag { color: var(--accent); }
   .date-dropdown .hint { padding: 8px 14px; font-size: 11px; color: var(--text-secondary); border-top: 1px dashed rgba(124,177,210,0.28); margin-top: 6px; }
 
-  /* 统计卡片 */
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; margin-bottom: 44px; }
+  /* 统计卡片 — 卡片统一，卡内数据大小有致 */
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 44px; }
   .stat-card {
     background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius);
-    padding: 22px 18px; text-align: center; position: relative;
+    padding: 18px 18px 12px; text-align: left; position: relative; overflow: hidden;
     box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+    display: flex; flex-direction: column; justify-content: flex-start; min-height: 112px;
   }
-  .stat-card .label { font-size: 12.5px; color: #5c6875; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; font-weight: 600; }
-  .stat-card .value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--title); }
-  .stat-card.c-blue { background: rgba(124,177,210,0.20); border-color: rgba(124,177,210,0.45); }
-  .stat-card.c-blue .value { color: #6A9FC0; }
-  .stat-card.c-sky { background: rgba(184,208,229,0.24); border-color: rgba(184,208,229,0.55); }
-  .stat-card.c-sky .value { color: #6A9FC0; }
-  .stat-card.c-pink { background: rgba(235,188,194,0.22); border-color: rgba(235,188,194,0.55); }
-  .stat-card.c-pink .value { color: #C98AAA; }
-  .stat-card.c-peach { background: rgba(255,230,190,0.28); border-color: rgba(240,210,158,0.6); }
-  .stat-card.c-peach .value { color: #E0A85A; }
+  .stat-card .label { color: #5c6875; margin-bottom: 8px; display: flex; flex-direction: column; gap: 1px; line-height: 1.1; }
+  .stat-card .label .lb-cn { font-size: 12px; font-weight: 600; letter-spacing: .02em; }
+  .stat-card .label .lb-en { font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #8a93a0; }
+  .stat-card .value { font-weight: 700; letter-spacing: -0.02em; color: var(--title); line-height: 1.05; }
+  .stat-card .sub { font-size: 12px; margin-top: 7px; font-weight: 500; color: #8a93a0; }
+  .stat-card .sub.up { color: #2f9e6b; }
+  .stat-card .sub.down { color: #d2603f; }
+  .stat-card .spark { width: 100%; height: 30px; margin-top: auto; color: #9fb6c8; display: block; }
+  .stat-card:nth-child(1) .value { font-size: 34px; }
+  .stat-card:nth-child(2) .value { font-size: 30px; }
+  .stat-card:nth-child(3) .value { font-size: 26px; }
+  .stat-card:nth-child(4) .value { font-size: 22px; }
+  /* 强调色已移除：统计卡统一为中性玻璃卡，颜色仅用于语义（趋势图/状态色），符合 KPI 卡规范 */
 
   /* 区块标题 */
   .section { margin-bottom: 44px; }
@@ -339,6 +343,44 @@
   .range-tabs { display: flex; gap: 10px; margin: 22px 0; }
   .range-btn { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.6); border-radius: 20px; padding: 9px 20px; font-size: 13px; font-weight: 600; color: var(--text-secondary); cursor: pointer; -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: all .18s; }
   .range-btn.active { background: var(--accent-tint); color: var(--accent); border-color: rgba(124,177,210,0.5); }
+
+  /* ===== 周期总览 · 方案A 时间轴报告 ===== */
+  .period-pill {
+    display: flex; align-items: center; gap: 8px; justify-content: center;
+    background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.7);
+    -webkit-backdrop-filter: blur(26px) saturate(190%); backdrop-filter: blur(26px) saturate(190%);
+    border-radius: 32px; padding: 8px 12px; margin: 18px auto 22px; max-width: 460px;
+    box-shadow: 0 10px 30px rgba(60,80,100,0.12);
+  }
+  .period-pill .pp-arrow {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(124,177,210,0.35);
+    background: var(--accent-tint); color: var(--accent); cursor: pointer; flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center; transition: all .16s;
+  }
+  .period-pill .pp-arrow:hover { background: var(--accent); color: #fff; }
+  .period-pill .pp-arrow:active { transform: scale(.9); }
+  .period-pill .pp-arrow svg { width: 18px; height: 18px; stroke-width: 2; }
+  .period-pill .pp-label { flex: 1 1 auto; text-align: center; font-size: 15px; font-weight: 700; color: var(--title); letter-spacing: .01em; font-variant-numeric: tabular-nums; }
+  .period-pill .pp-toggle { display: flex; background: rgba(124,177,210,0.12); border-radius: 18px; padding: 3px; flex: 0 0 auto; }
+  .period-pill .ppt { border: none; background: none; padding: 6px 14px; border-radius: 15px; font-size: 13px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all .16s; }
+  .period-pill .ppt.active { background: #fff; color: var(--accent); box-shadow: 0 2px 8px rgba(124,177,210,0.25); }
+
+  .timeline-view { padding: 6px 2px 4px; }
+  .tl-day { margin-bottom: 22px; }
+  .tl-date { display: flex; align-items: baseline; gap: 8px; margin: 4px 0 12px; padding-left: 2px; }
+  .tl-date .d { font-size: 15px; font-weight: 700; color: var(--title); font-variant-numeric: tabular-nums; }
+  .tl-date .w { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-tint); padding: 2px 9px; border-radius: 10px; }
+  .tl-date .sum { margin-left: auto; font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .tl-row {
+    display: flex; align-items: center; gap: 10px; margin: 9px 0; padding: 10px 14px;
+    background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.6);
+    border-left: 3px solid var(--accent); border-radius: 12px;
+    -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  }
+  .tl-row .tl-tag { flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 9px; }
+  .tl-row .tl-title { flex: 1 1 auto; font-size: 13.5px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tl-row .tl-time { flex: 0 0 auto; font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .tl-empty { text-align: center; color: var(--text-secondary); font-size: 13px; padding: 30px 10px; }
   /* ===== 底部圆角悬浮导览 ===== */
   .float-nav {
     position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
@@ -459,7 +501,7 @@
 
 
 <div class="header-card">
-  <h1><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5M9.5 8.5h1.5"/></svg></span>每日工作总结报告</h1>
+  <h1><span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5M9.5 8.5h1.5"/></svg></span><span id="viewTitle">今日时间线</span></h1>
   <div class="subtitle">基于电脑活动痕迹自动生成 · 多日报汇总查阅</div>
   <div class="date-row">
     <div class="date-pill">
@@ -562,10 +604,10 @@
       const emptyCard = `
         ${noteHtml}
         <div class="stats-row">
-          <div class="stat-card c-blue"><div class="label">到岗 · 企业微信</div><div class="value">${fmtRoutine(r.wecomOpen)}</div></div>
-          <div class="stat-card c-sky"><div class="label">收工 · 当日关机</div><div class="value">${fmtRoutine(r.lastShutdown)}</div></div>
-          <div class="stat-card c-pink"><div class="label">真实时长</div><div class="value">—</div></div>
-          <div class="stat-card c-peach"><div class="label">空白/补齐</div><div class="value">—</div></div>
+          ${statCard('c-blue','<span class="lb-cn">到岗</span><span class="lb-en">ARRIVAL</span>',fmtRoutine(r.wecomOpen),'<div class="sub neu">企业微信启动</div>','')}
+          ${statCard('c-sky','<span class="lb-cn">收工</span><span class="lb-en">OFF WORK</span>',fmtRoutine(r.lastShutdown),'<div class="sub neu">当日关机</div>','')}
+          ${statCard('c-pink','<span class="lb-cn">真实时长</span><span class="lb-en">REAL DURATION</span>','—','<div class="sub neu">暂无数据</div>','')}
+          ${statCard('c-peach','<span class="lb-cn">空白/补齐</span><span class="lb-en">GAPS</span>','—','<div class="sub neu">暂无数据</div>','')}
         </div>
         <div class="empty-state">
           <div class="es-icon">${ic('coffee')}</div>
@@ -620,13 +662,21 @@
 
     const scanHtml = d.scanInfo.map((x) => `<li>${ic('check')}${x}</li>`).join('');
 
+    const curReal = parseRealTrend(s.real);
+    const prevReal = idx > 0 ? parseRealTrend(DATA.dates[idx-1].stats && DATA.dates[idx-1].stats.real) : null;
+    const curGap = parseRealTrend(s.gaps);
+    const prevGap = idx > 0 ? parseRealTrend(DATA.dates[idx-1].stats && DATA.dates[idx-1].stats.gaps) : null;
+    const realDi = deltaInfo(curReal, prevReal, true), gapDi = deltaInfo(curGap, prevGap, false);
+    const cards = ''
+      + statCard('c-blue', '<span class="lb-cn">到岗</span><span class="lb-en">ARRIVAL</span>', fmtRoutine(r.wecomOpen), '<div class="sub neu">企业微信启动</div>', '')
+      + statCard('c-sky', '<span class="lb-cn">收工</span><span class="lb-en">OFF WORK</span>', fmtRoutine(r.lastShutdown), '<div class="sub neu">当日关机</div>', '')
+      + statCard('c-pink', '<span class="lb-cn">真实时长</span><span class="lb-en">REAL DURATION</span>', s.real, '<div class="sub ' + realDi.cls + '">' + realDi.txt + '</div>', sparkline(lastN('real', idx, 7), 120, 30))
+      + statCard('c-peach', '<span class="lb-cn">空白/补齐</span><span class="lb-en">GAPS</span>', s.gaps, '<div class="sub ' + gapDi.cls + '">' + gapDi.txt + '</div>', sparkline(lastN('gaps', idx, 7), 120, 30));
+
     $('#reportView').innerHTML = `
       ${noteHtml}
       <div class="stats-row">
-        <div class="stat-card c-blue"><div class="label">到岗 · 企业微信</div><div class="value">${fmtRoutine(r.wecomOpen)}</div></div>
-        <div class="stat-card c-sky"><div class="label">收工 · 当日关机</div><div class="value">${fmtRoutine(r.lastShutdown)}</div></div>
-        <div class="stat-card c-pink"><div class="label">真实时长</div><div class="value">${s.real}</div></div>
-        <div class="stat-card c-peach"><div class="label">空白/补齐</div><div class="value">${s.gaps}</div></div>
+        ${cards}
       </div>
 
       <div class="section">
@@ -791,7 +841,7 @@
 
   // ===== 趋势视图 =====
   const trendView = document.getElementById('trendView');
-  let trendBuilt = false, currentRange = 'all', barChart = null, catChart = null;
+  let trendBuilt = false, barChart = null, catChart = null;
   const TREND_CAT = { design:'设计产出', study:'学习', test:'测试探索', meet:'沟通会议', misc:'其他' };
   const TREND_COLOR = { design:'#7CB1D2', study:'#B8D0E5', test:'#C98AAA', meet:'#E0A85A', misc:'#9DB0BF' };
   function icoToCat(ico) {
@@ -810,6 +860,48 @@
     m = s.match(/(\d+)/);
     return m ? parseInt(m[1]) : null;
   }
+  // KPI 卡解剖：迷你趋势线（近 N 天，无坐标轴 sparkline）
+  function sparkline(arr, w, h) {
+    const vals = (arr || []).filter(v => v != null && !isNaN(v));
+    if (vals.length < 2) return '';
+    const max = Math.max.apply(null, vals), min = Math.min.apply(null, vals);
+    const range = (max - min) || 1;
+    const n = vals.length, stepX = w / (n - 1);
+    const pts = vals.map((v, i) => {
+      const x = (8 + i * stepX).toFixed(1);
+      const y = (h - 5 - ((v - min) / range) * (h - 10)).toFixed(1);
+      return x + ',' + y;
+    });
+    const lastY = (h - 5 - ((vals[n - 1] - min) / range) * (h - 10)).toFixed(1);
+    const lastX = (8 + (n - 1) * stepX).toFixed(1);
+    return '<svg class="spark" viewBox="0 0 ' + (w + 16) + ' ' + h + '" preserveAspectRatio="none">'
+      + '<polyline points="' + pts.join(' ') + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+      + '<circle cx="' + lastX + '" cy="' + lastY + '" r="2.4" fill="currentColor"/></svg>';
+  }
+  // 取当前日往前 N 天的某指标（real/gaps）分钟数
+  function lastN(key, idx, n) {
+    const out = [];
+    for (let i = Math.max(0, idx - n + 1); i <= idx; i++) {
+      const dd = DATA.dates[i];
+      out.push(dd && dd.stats ? parseRealTrend(dd.stats[key]) : null);
+    }
+    return out;
+  }
+  // 增量对比：goodUp=true 表示上升为好（真实时长）；false 表示上升为差（空白补齐）
+  function deltaInfo(cur, prev, goodUp) {
+    if (cur == null || prev == null) return { txt: '暂无对比', cls: 'neu' };
+    const diff = cur - prev;
+    if (diff === 0) return { txt: '持平 较昨日', cls: 'neu' };
+    const pct = Math.round(Math.abs(diff) / prev * 100);
+    const good = goodUp ? diff > 0 : diff < 0;
+    return { txt: (diff > 0 ? '▲ ' : '▼ ') + pct + '% 较昨日', cls: good ? 'up' : 'down' };
+  }
+  function statCard(cls, label, value, sub, spark) {
+    return '<div class="stat-card ' + cls + '">'
+      + '<div class="label">' + label + '</div>'
+      + '<div class="value">' + value + '</div>'
+      + (sub || '') + (spark || '') + '</div>';
+  }
   function spanMinTrend(t) {
     const mt = (t || '').match(/(\d{1,2}):(\d{2})/g) || [];
     if (mt.length >= 2) {
@@ -818,35 +910,65 @@
     }
     return 0;
   }
-  function datesInRange(range) {
+  // ===== 周期总览 · 方案A：周/月导航 =====
+  let trendMode = 'week';     // 'week' | 'month'
+  let trendCursor = null;     // 锚定日期 id，null = 取最新一天
+  function trendAnchor() {
+    if (trendCursor) return trendCursor;
+    const ids = DATA.dates.map(d => d.id).sort();
+    return ids[ids.length - 1];
+  }
+  function getPeriodDates() {
     const dates = DATA.dates.slice();
-    if (range === 'all') return dates;
-    const ids = dates.map(d => d.id).sort();
-    const last = ids[ids.length - 1];
-    if (range === 'week') {
-      const end = new Date(last + 'T00:00:00');
-      const start = new Date(end); start.setDate(end.getDate() - 6);
-      const s = start.toISOString().slice(0, 10);
-      return dates.filter(d => d.id >= s && d.id <= last);
-    }
-    if (range === 'month') {
-      const ym = last.slice(0, 7);
+    const anchor = trendAnchor();
+    if (trendMode === 'month') {
+      const ym = anchor.slice(0, 7);
       return dates.filter(d => d.id.slice(0, 7) === ym);
     }
-    return dates;
+    // week: 以 anchor 为终点，往前 6 天
+    const end = new Date(anchor + 'T00:00:00');
+    const start = new Date(end); start.setDate(end.getDate() - 6);
+    const s = start.toISOString().slice(0, 10);
+    return dates.filter(d => d.id >= s && d.id <= anchor).sort((a, b) => a.id.localeCompare(b.id));
+  }
+  function periodLabel() {
+    const anchor = trendAnchor();
+    if (trendMode === 'month') {
+      const [, m] = anchor.split('-');
+      return anchor.slice(0, 4) + '年' + parseInt(m) + '月';
+    }
+    const d = new Date(anchor + 'T00:00:00');
+    const w = Math.ceil(d.getDate() / 7);
+    return d.getFullYear() + '.' + (d.getMonth() + 1) + ' W' + w;
+  }
+  function shiftPeriod(dir) {
+    const anchor = trendAnchor();
+    const d = new Date(anchor + 'T00:00:00');
+    if (trendMode === 'month') d.setMonth(d.getMonth() + dir);
+    else d.setDate(d.getDate() + dir * 7);
+    trendCursor = d.toISOString().slice(0, 10);
+    renderTrend();
+  }
+  function fmtWeekday(id) {
+    const d = new Date(id + 'T00:00:00');
+    return WEEK_EN[d.getDay()];
   }
   function buildTrend() {
     trendView.innerHTML = `
-      <div class="range-tabs">
-        <div class="range-btn active" data-range="all">全部</div>
-        <div class="range-btn" data-range="week">本周</div>
-        <div class="range-btn" data-range="month">本月</div>
+      <div class="period-pill">
+        <button class="pp-arrow" id="ppPrev" title="上一周期"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="pp-label" id="ppLabel">—</div>
+        <button class="pp-arrow" id="ppNext" title="下一周期"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="pp-toggle">
+          <button class="ppt${trendMode === 'week' ? ' active' : ''}" data-mode="week">周</button>
+          <button class="ppt${trendMode === 'month' ? ' active' : ''}" data-mode="month">月</button>
+        </div>
       </div>
       <div class="stats-row trend-stats">
-        <div class="stat-card c-blue"><div class="label">总真实时长</div><div class="value" id="sTotal">—</div></div>
-        <div class="stat-card c-sky"><div class="label">日均时长</div><div class="value" id="sAvg">—</div></div>
-        <div class="stat-card c-pink"><div class="label">活跃天数</div><div class="value" id="sDays">—</div></div>
-        <div class="stat-card c-peach"><div class="label">最长一天</div><div class="value" id="sMax">—</div></div>
+        <div class="stat-card c-blue"><div class="label"><span class="lb-cn">总真实时长</span><span class="lb-en">TOTAL REAL</span></div><div class="value" id="sTotal">—</div><div class="sub neu">本周期累计</div></div>
+        <div class="stat-card c-sky"><div class="label"><span class="lb-cn">日均时长</span><span class="lb-en">DAILY AVG</span></div><div class="value" id="sAvg">—</div><div class="sub neu">按活跃天数</div></div>
+        <div class="stat-card c-pink"><div class="label"><span class="lb-cn">活跃天数</span><span class="lb-en">ACTIVE DAYS</span></div><div class="value" id="sDays">—</div><div class="sub neu">有记录日</div></div>
+        <div class="stat-card c-peach"><div class="label"><span class="lb-cn">最长一天</span><span class="lb-en">MAX DAY</span></div><div class="value" id="sMax">—</div><div class="sub neu">峰值日</div></div>
       </div>
       <div class="section">
         <div class="section-head"><span class="si">${ic('chart')}</span><span class="st">每日真实时长</span></div>
@@ -861,23 +983,28 @@
           </div>
           <div class="trend-note">类别按 emoji 归并：🎨🖼️🌅 设计产出 · 📚 学习 · 🧪 测试探索 · 💬📊 沟通会议 · 其余归其他</div>
         </div>
+      </div>
       </div>`;
-    trendView.querySelectorAll('.range-btn').forEach(t => {
+    document.getElementById('ppPrev').addEventListener('click', () => shiftPeriod(-1));
+    document.getElementById('ppNext').addEventListener('click', () => shiftPeriod(1));
+    trendView.querySelectorAll('.ppt').forEach(t => {
       t.addEventListener('click', () => {
-        trendView.querySelectorAll('.range-btn').forEach(x => x.classList.remove('active'));
+        trendView.querySelectorAll('.ppt').forEach(x => x.classList.remove('active'));
         t.classList.add('active');
-        currentRange = t.dataset.range;
-        renderTrend(currentRange);
+        trendMode = t.dataset.mode;
+        trendCursor = null;
+        renderTrend();
       });
     });
   }
-  function renderTrend(range) {
-    const ds = datesInRange(range);
+  function renderTrend() {
+    const ds = getPeriodDates();
+    const label = document.getElementById('ppLabel');
+    if (label) label.textContent = periodLabel();
     let total = 0, maxV = 0, maxDay = '', days = 0;
-    const labels = [], vals = [];
     ds.forEach(d => {
       const v = parseRealTrend(d.stats && d.stats.real);
-      if (v != null) { total += v; days++; labels.push(d.id.slice(5)); vals.push(v); if (v > maxV) { maxV = v; maxDay = d.id.slice(5); } }
+      if (v != null) { total += v; days++; if (v > maxV) { maxV = v; maxDay = d.id.slice(5); } }
     });
     const sTotal = document.getElementById('sTotal'), sAvg = document.getElementById('sAvg'),
           sDays = document.getElementById('sDays'), sMax = document.getElementById('sMax');
@@ -885,7 +1012,10 @@
     if (sAvg) sAvg.textContent = days ? (total / days / 60).toFixed(1) + 'h' : '—';
     if (sDays) sDays.textContent = days;
     if (sMax) sMax.textContent = maxDay ? maxDay + ' ' + (maxV / 60).toFixed(1) + 'h' : '—';
+
+    // 每日真实时长柱状图
     if (typeof Chart === 'undefined') { console.warn('Chart.js 未加载'); return; }
+    const labels = ds.map(d => d.id.slice(5)), vals = ds.map(d => parseRealTrend(d.stats && d.stats.real) || 0);
     if (barChart) barChart.destroy();
     barChart = new Chart(document.getElementById('barChart'), {
       type: 'bar',
@@ -894,6 +1024,7 @@
         plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => Math.round(c.parsed.y / 60 * 10) / 10 + ' 小时' } } },
         scales: { y: { beginAtZero: true, grid: { color: 'rgba(124,177,210,0.15)' } }, x: { grid: { display: false } } } }
     });
+    // 工作类别占比环形图
     const agg = { design: 0, study: 0, test: 0, meet: 0, misc: 0 };
     ds.forEach(d => { (d.segments || []).forEach(s => { if (s.lunch) return; agg[icoToCat(s.ico)] += spanMinTrend(s.time); }); });
     const cats = Object.keys(agg).filter(k => agg[k] > 0);
@@ -910,7 +1041,13 @@
     const tot = cdata.reduce((a, b) => a + b, 0) || 1;
     if (lg) lg.innerHTML = cats.map((k, i) => `<div class="row"><span class="dot" style="background:${ccolor[i]}"></span>${TREND_CAT[k]}<b>${Math.round(cdata[i] / tot * 100)}%</b></div>`).join('');
   }
+  function updateViewTitle(v) {
+    const titles = { timeline: '人效时间', checklist: '工作清单', trend: '周期总览' };
+    const el = document.getElementById('viewTitle');
+    if (el) el.textContent = titles[v] || '工作人效收集';
+  }
   function setView(v) {
+    updateViewTitle(v);
     const dailyPanel = document.getElementById('dailyPanel');
     const checklistPanel = document.getElementById('checklistPanel');
     const dateRow = document.querySelector('.date-row');
@@ -922,7 +1059,7 @@
       closeDateDropdown();
       if (stickyBar) stickyBar.style.display = 'none';
       if (!trendBuilt) { buildTrend(); trendBuilt = true; }
-      renderTrend(currentRange);
+      renderTrend();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (v === 'checklist') {
       dailyPanel.style.display = 'none';
@@ -993,7 +1130,7 @@
   }
   if (splash) {
     const q = document.getElementById('dailyQuote');
-    if (q) q.innerHTML = pickQuote() + '<small>每日一言 · ' + (DATA.dates[current] ? DATA.dates[current].label : '') + '</small>';
+    if (q) q.innerHTML = pickQuote() + '<small>每日一言</small>';
     splash.addEventListener('click', dismissSplash);
     requestAnimationFrame(() => splash.classList.add('in'));
   }
