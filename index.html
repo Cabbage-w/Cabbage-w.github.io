@@ -255,18 +255,18 @@
   .copy-btn:hover { filter: brightness(1.06); }
   .copy-btn.done { background: var(--green); }
   .to-top {
-    position: fixed; right: 22px; bottom: 22px; z-index: 150;
-    width: 44px; height: 44px; border-radius: 50%; border: none;
+    position: fixed; right: 22px; bottom: 96px; z-index: 150;
+    width: 40px; height: 40px; border-radius: 50%; border: none;
     background: var(--accent); color: #fff; cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center;
     box-shadow: 0 8px 22px rgba(94,147,184,0.40), inset 0 1px 0 rgba(255,255,255,0.35);
     opacity: 0; transform: scale(.4) translateY(16px); pointer-events: none;
     transition: opacity .28s cubic-bezier(.4,0,.2,1), transform .34s cubic-bezier(.4,0,.2,1), filter .15s;
   }
-  .to-top.show { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+  .to-top.show { opacity: 1; transform: scale(.9) translateY(0); pointer-events: auto; }
   .to-top:hover { filter: brightness(1.07); }
-  .to-top:active { transform: scale(.92); }
-  .to-top svg { width: 19px; height: 19px; stroke-width: 2; }
+  .to-top:active { transform: scale(.82); }
+  .to-top svg { width: 17px; height: 17px; stroke-width: 2; }
   pre#checklistPre {
     background: #f6f8fa; border: 1px solid var(--border); border-radius: 20px; padding: 16px 18px;
     font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 13.5px; line-height: 1.9;
