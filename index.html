@@ -406,21 +406,21 @@
   .splash-card .en { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 18px; }
   .splash-card .div { width: 46px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); margin: 0 auto 14px; }
   .splash-card .hint { font-size: 13px; color: var(--text-secondary); }
-  .splash-actions { display: flex; gap: 16px; margin-top: 38px; justify-content: center; }
-  .splash-btn {
-    display: inline-flex; align-items: center; gap: 9px;
-    background: rgba(255,255,255,0.50); border: 1px solid rgba(255,255,255,0.65);
-    border-radius: 22px; padding: 13px 30px; font-size: 15px; font-weight: 600; color: var(--text);
-    cursor: pointer; -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
-    transition: all .2s cubic-bezier(.4,0,.2,1);
+  .daily-quote {
+    margin-top: 34px; padding: 18px 28px;
+    background: rgba(255,255,255,0.40);
+    border: 1px solid rgba(255,255,255,0.60);
+    border-radius: 22px;
+    font-size: 15.5px; font-weight: 500; font-style: italic;
+    line-height: 1.6; color: var(--text);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: 0 6px 20px rgba(60,80,100,0.06), inset 0 1px 0 rgba(255,255,255,0.70);
+    transition: transform .2s cubic-bezier(.4,0,.2,1);
   }
-  .splash-btn svg { width: 18px; height: 18px; stroke-width: 1.8; }
-  .splash-btn .icn { color: var(--accent); }
-  .splash-btn:hover { background: var(--accent-tint); border-color: rgba(124,177,210,0.50); transform: translateY(-2px); }
-  .splash-btn:active { transform: scale(.97); }
-  .splash-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .splash-btn.primary .icn { color: #fff; }
-  .splash-btn.primary:hover { filter: brightness(1.06); background: var(--accent); }
+  .daily-quote::before { content: '“'; color: var(--accent); font-size: 22px; font-weight: 700; margin-right: 4px; }
+  .daily-quote::after { content: '”'; color: var(--accent); font-size: 22px; font-weight: 700; margin-left: 4px; }
+  .daily-quote small { display: block; margin-top: 8px; font-size: 11.5px; font-style: normal; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-secondary); }
   .splash-foot { position: absolute; bottom: 26px; font-size: 11.5px; letter-spacing: .04em; color: var(--text-secondary); opacity: .8; }
 
 </style>
@@ -448,14 +448,11 @@
 <div class="splash" id="splash">
   <div class="splash-card">
     <span class="mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5M9.5 8.5h1.5"/></svg></span>
-    <h1>每日工作总结报告</h1>
-    <div class="en">Daily Work Summary</div>
+    <h1>工作人效收集</h1>
+    <div class="en">Daily Efficiency Collection</div>
     <div class="div"></div>
-    <div class="hint">选择进入方式</div>
-    <div class="splash-actions">
-      <button class="splash-btn primary" data-go="daily"><span class="icn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/></svg></span>日报</button>
-      <button class="splash-btn" data-go="trend"><span class="icn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 15l3.5-4 3 3L20 7"/></svg></span>趋势</button>
-    </div>
+    <div class="hint">轻触进入今日日报</div>
+    <div class="daily-quote" id="dailyQuote"></div>
   </div>
   <div class="splash-foot">基于电脑活动痕迹自动生成 · 每日 17:50 更新</div>
 </div>
@@ -950,17 +947,54 @@
 
   // ===== 入场封面 Splash =====
   const splash = document.getElementById('splash');
-  function dismissSplash(v) {
+  const QUOTES = [
+    '今天也是闪闪发光的一天。',
+    '慢慢来，比较快。',
+    '专注当下，效率自来。',
+    '每一步都算数。',
+    '把复杂的事拆小，把小的事做好。',
+    '最好的投资，就是投资自己。',
+    '行动是缓解焦虑的良药。',
+    '保持好奇，保持热爱。',
+    '今天比昨天更进步一点点。',
+    '简单的事情重复做，重复的事情用心做。',
+    '你的时间花在哪儿，成绩就在哪儿。',
+    '不积跬步，无以至千里。',
+    '先完成，再完美。',
+    '今天的努力，是明天的底气。',
+    '累了就休息，但别放弃。',
+    '你的专注，就是超能力。',
+    '把“我想”变成“我在做”。',
+    '每一天都是新的开始。',
+    '高效工作，是为了更好地生活。',
+    '小步快跑，持续迭代。',
+    '做事有节奏，生活有温度。',
+    '主动一点，机会就近一点。',
+    '复盘让经验变成能力。',
+    '保持输出，保持成长。',
+    '你的认真，时间都看得见。',
+    '不怕慢，就怕站。',
+    '用数据说话，用行动证明。',
+    '今日事，今日毕。',
+    '把工作当作作品，把今天当作礼物。',
+    '好习惯，是最高效的复利。'
+  ];
+  function pickQuote() {
+    const id = DATA.dates[current] ? DATA.dates[current].id : new Date().toISOString().slice(0,10);
+    let n = 0;
+    for (let i = 0; i < id.length; i++) n = (n * 31 + id.charCodeAt(i)) >>> 0;
+    return QUOTES[n % QUOTES.length];
+  }
+  function dismissSplash() {
     if (!splash || splash.classList.contains('out')) return;
-    navTo(v === 'trend' ? 'trend' : 'timeline');
+    navTo('timeline');
     splash.classList.add('out');
     setTimeout(() => { splash.style.display = 'none'; }, 520);
   }
   if (splash) {
-    splash.querySelectorAll('.splash-btn').forEach(b => {
-      b.addEventListener('click', (e) => { e.stopPropagation(); dismissSplash(b.dataset.go); });
-    });
-    splash.addEventListener('click', () => dismissSplash('daily'));
+    const q = document.getElementById('dailyQuote');
+    if (q) q.innerHTML = pickQuote() + '<small>每日一言 · ' + (DATA.dates[current] ? DATA.dates[current].label : '') + '</small>';
+    splash.addEventListener('click', dismissSplash);
     requestAnimationFrame(() => splash.classList.add('in'));
   }
 
