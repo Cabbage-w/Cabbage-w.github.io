@@ -48,7 +48,7 @@
     background: transparent;
     color: var(--text);
     line-height: 1.65;
-    padding: 34px 28px 96px;
+    padding: 30px 24px 80px;
     max-width: 920px;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
@@ -157,7 +157,7 @@
   .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 44px; }
   .stat-card {
     background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius);
-    padding: 18px 18px 12px; text-align: left; position: relative; overflow: hidden;
+    padding: 16px 16px 10px; text-align: left; position: relative; overflow: hidden;
     box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
     display: flex; flex-direction: column; justify-content: flex-start; min-height: 112px;
   }
@@ -174,19 +174,22 @@
   .stat-card.c-sky { --c: #F6C95D; }
   .stat-card.c-pink { --c: #6FB8A0; }
   .stat-card.c-peach { --c: #EF9BB0; }
-  .stat-card .label .lb-en { color: var(--c); }
   .stat-card::after { content:""; position:absolute; left:0; right:0; top:0; height:3px; background: var(--c); border-radius: var(--radius) var(--radius) 0 0; }
 
   /* 区块标题 */
-  .section { margin-bottom: 44px; }
+  .section { margin-bottom: 36px; }
   .section-head {
     display: flex; align-items: center; gap: 11px;
     background: rgba(239,154,123,0.18); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(239,154,123,0.40); border-radius: 22px;
-    padding: 13px 18px; margin-bottom: 22px;
+    padding: 12px 16px; margin-bottom: 18px;
     box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.55);
   }
   .section-head .si { color: var(--accent); display: inline-flex; }
   .section-head .si svg { width: 19px; height: 19px; }
+  .seg-toggle-all { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.7); border: 1px solid rgba(239,154,123,0.35); border-radius: 22px; color: var(--accent); font-size: 11.5px; font-weight: 600; letter-spacing: .02em; padding: 6px 13px; cursor: pointer; transition: all .18s cubic-bezier(.4,0,.2,1); }
+  .seg-toggle-all:hover { background: var(--accent-tint); box-shadow: 0 4px 14px rgba(239,154,123,0.22); }
+  .seg-toggle-all svg { width: 15px; height: 15px; stroke-width: 1.8; }
+  .seg-toggle-all .sta { display: inline; }
   .section-head .st { font-size: 16.5px; font-weight: 600; color: var(--title); letter-spacing: .01em; }
   .section-head .sm { margin-left: auto; font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
   .section-head.pink {
@@ -467,6 +470,46 @@
   .daily-quote small { display: block; margin-top: 8px; font-size: 11.5px; font-style: normal; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-secondary); }
   .splash-foot { position: absolute; bottom: 26px; font-size: 11.5px; letter-spacing: .04em; color: var(--text-secondary); opacity: .8; }
 
+  /* ===== 移动端适配 (max-width:600px) ===== */
+  @media (max-width: 600px) {
+    body { padding: 20px 14px 72px; max-width: 100%; }
+    .topbar { height: 3px; }
+    .sticky-bar { padding: 8px 14px; }
+    .sb-inner { gap: 6px; }
+    .date-pill { gap: 6px; }
+    #sbDateLabel { font-size: 12px; }
+    .float-nav { gap: 4px; padding: 7px; }
+    .float-nav .nav-item { font-size: 11.5px; padding: 7px 12px; min-width: 60px; }
+    .header-card { padding: 22px 18px; border-radius: 18px; }
+    .header-card h1 { font-size: 24px; }
+    .header-card .sub { font-size: 12px; }
+    .stats-row { grid-template-columns: 1fr; gap: 12px; margin-bottom: 30px; }
+    .stat-card { padding: 15px 15px 10px; min-height: 96px; }
+    .stat-card .value { font-size: 25px; }
+    .stat-card .label .lb-cn { font-size: 11px; }
+    .section { margin-bottom: 32px; }
+    .section-head { padding: 11px 14px; margin-bottom: 16px; border-radius: 16px; }
+    .section-head .st { font-size: 14px; }
+    .card { padding: 16px; margin-bottom: 14px; border-radius: 18px; }
+    .tl-item { gap: 8px; }
+    .tl-time { font-size: 11.5px; min-width: 52px; }
+    .tl-body .t { font-size: 13px; }
+    .checklist-wrap.pink pre#checklistPre { font-size: 12px; padding: 12px 14px; border-radius: 14px; }
+    .checklist-head .ct { font-size: 13px; }
+    .scan-info { font-size: 12.5px; }
+    .seg-head { padding: 11px 14px; }
+    .seg-name { font-size: 13px; }
+    .seg-time { font-size: 11.5px; }
+    .empty-state { padding: 26px 18px; }
+    .empty-state h3 { font-size: 17px; }
+    .chart-box { height: 240px; }
+    .doughnut-box { width: 100%; height: 200px; flex: 1 1 100%; }
+    .legend { font-size: 12px; }
+    .trend-note { font-size: 11px; }
+    .seg-toggle-all { font-size: 10.5px; padding: 5px 10px; }
+    .seg-toggle-all svg { width: 13px; height: 13px; }
+  }
+
 </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
@@ -682,7 +725,7 @@
       </div>
 
       <div class="section">
-        <div class="section-head"><span class="si">${ic('clock')}</span><span class="st">工作时间线</span><span class="sm">${d.segments.length} 个时段</span></div>
+        <div class="section-head"><span class="si">${ic('clock')}</span><span class="st">工作时间线</span><span class="sm">${d.segments.length} 个时段</span><button class="seg-toggle-all" onclick="toggleAllSegs()" title="全部展开 / 收起">${ic('layers')}<span class="sta">全部展开</span></button></div>
         ${segsHtml}
       </div>
 
@@ -714,6 +757,14 @@
     seg.classList.remove('tapping');
     void seg.offsetWidth;
     seg.classList.add('tapping');
+  }
+  function toggleAllSegs() {
+    const btn = document.querySelector('.seg-toggle-all');
+    const sta = btn ? btn.querySelector('.sta') : null;
+    const segs = document.querySelectorAll('.seg');
+    const anyOpen = Array.from(segs).some(s => !s.classList.contains('collapsed'));
+    segs.forEach(s => { if (anyOpen) s.classList.add('collapsed'); else s.classList.remove('collapsed'); });
+    if (sta) sta.textContent = anyOpen ? '全部展开' : '收起';
   }
 
   function copyChecklist() {
