@@ -1126,7 +1126,7 @@
   }
   if (splash) {
     const q = document.getElementById('dailyQuote');
-    if (q) q.innerHTML = pickQuote() + '<small>每日一言</small>';
+    if (q) q.innerHTML = pickQuote();
     splash.addEventListener('click', dismissSplash);
     requestAnimationFrame(() => splash.classList.add('in'));
   }
