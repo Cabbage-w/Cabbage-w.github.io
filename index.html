@@ -164,7 +164,7 @@
   .stat-card .label { color: #5c6875; margin-bottom: 8px; display: flex; flex-direction: column; gap: 1px; line-height: 1.1; }
   .stat-card .label .lb-cn { font-size: 12px; font-weight: 500; letter-spacing: .02em; }
   .stat-card .label .lb-en { font-size: 9.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: #8a93a0; }
-  .stat-card .value { font-weight: 600; letter-spacing: -0.02em; color: var(--title); line-height: 1.05; font-size: 30px; font-variant-numeric: tabular-nums; }
+  .stat-card .value { font-weight: 600; letter-spacing: -0.02em; color: var(--title); line-height: 1.05; font-size: 30px; font-variant-numeric: tabular-nums; font-family: Georgia, serif; }
   .stat-card .sub { font-size: 12px; margin-top: 7px; font-weight: 500; color: #8a93a0; }
   .stat-card .sub.up { color: #2f9e6b; }
   .stat-card .sub.down { color: #d2603f; }
@@ -213,7 +213,7 @@
   .seg.fill .seg-head .seg-ico { color: var(--orange); }
   .seg-head .seg-name { font-size: 14.5px; font-weight: 600; color: var(--title); flex: 1; letter-spacing: .01em; }
   .seg.fill .seg-head .seg-name { color: #B8832F; }
-  .seg-head .seg-time { font-size: 12px; color: var(--text-secondary); }
+  .seg-head .seg-time { font-size: 12px; color: var(--text-secondary); font-family: Georgia, serif; }
   .seg-head .arrow { color: var(--text-secondary); transition: transform .2s; }
   .seg.collapsed .arrow { transform: rotate(-90deg); }
   .seg-body { padding: 4px 20px 18px; overflow: hidden; max-height: 2600px; opacity: 1; transform: translateY(0); transition: max-height .42s cubic-bezier(.4,0,.2,1), opacity .3s ease, transform .3s ease, padding .3s ease; will-change: max-height, opacity; }
@@ -225,7 +225,7 @@
   .tl-item:last-child { border-bottom: none; }
   .tl-dot { flex: 0 0 8px; height: 8px; width: 8px; border-radius: 50%; background: var(--accent); margin-top: 8px; }
   .tl-item.fill .tl-dot { background: var(--orange); }
-  .tl-time { flex: 0 0 110px; font-size: 12px; font-weight: 600; color: var(--accent); padding-top: 1px; }
+  .tl-time { flex: 0 0 110px; font-size: 12px; font-weight: 600; color: var(--accent); padding-top: 1px; font-family: Georgia, serif; }
   .tl-item.fill .tl-time { color: var(--orange); }
   .tl-item.fill .tl-body .t { background: rgba(246,201,93,0.16); border-color: rgba(246,201,93,0.45); border-left-color: var(--orange); color: #B5832A; }
   .tl-body .t {
@@ -253,7 +253,7 @@
   .checklist-wrap { background: rgba(255,255,255,0.5); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.6); border-radius: var(--radius); padding: 20px 22px; box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6); }
   .checklist-wrap.pink .checklist-head .ct svg { color: var(--teal); }
   .checklist-wrap.pink .copy-btn { background: var(--teal); }
-  .checklist-wrap.pink pre#checklistPre { background: rgba(239,154,123,0.10); border-color: rgba(239,154,123,0.25); }
+  .checklist-wrap.pink pre#checklistPre { background: rgba(239,154,123,0.10); border-color: rgba(239,154,123,0.25); font-family: Georgia, serif; }
   .checklist-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .checklist-head .ct { font-size: 14.5px; font-weight: 600; color: var(--title); display: flex; align-items: center; gap: 8px; letter-spacing: .01em; }
   .copy-btn {
@@ -278,7 +278,7 @@
   .to-top svg { width: 17px; height: 17px; stroke-width: 2; }
   pre#checklistPre {
     background: #f6f8fa; border: 1px solid var(--border); border-radius: 20px; padding: 16px 18px;
-    font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 13.5px; line-height: 1.9;
+    font-family: Georgia, serif; font-size: 13.5px; line-height: 1.9;
     color: var(--title); white-space: pre-wrap; word-break: break-all;
   }
 
@@ -384,7 +384,7 @@
   }
   .tl-row .tl-tag { flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 9px; }
   .tl-row .tl-title { flex: 1 1 auto; font-size: 13.5px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tl-row .tl-time { flex: 0 0 auto; font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .tl-row .tl-time { flex: 0 0 auto; font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; font-family: Georgia, serif; }
   .tl-empty { text-align: center; color: var(--text-secondary); font-size: 13px; padding: 30px 10px; }
   /* ===== 底部圆角悬浮导览 ===== */
   .float-nav {
@@ -492,14 +492,14 @@
     .section-head .st { font-size: 14px; }
     .card { padding: 16px; margin-bottom: 14px; border-radius: 18px; }
     .tl-item { gap: 8px; }
-    .tl-time { font-size: 11.5px; min-width: 52px; }
+    .tl-time { font-size: 11.5px; min-width: 52px; font-family: Georgia, serif; }
     .tl-body .t { font-size: 13px; }
-    .checklist-wrap.pink pre#checklistPre { font-size: 12px; padding: 12px 14px; border-radius: 14px; }
+    .checklist-wrap.pink pre#checklistPre { font-size: 12px; padding: 12px 14px; border-radius: 14px; font-family: Georgia, serif; }
     .checklist-head .ct { font-size: 13px; }
     .scan-info { font-size: 12.5px; }
     .seg-head { padding: 11px 14px; }
     .seg-name { font-size: 13px; }
-    .seg-time { font-size: 11.5px; }
+    .seg-time { font-size: 11.5px; font-family: Georgia, serif; }
     .empty-state { padding: 26px 18px; }
     .empty-state h3 { font-size: 17px; }
     .chart-box { height: 240px; }
