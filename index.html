@@ -9,6 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- global font is Georgia, Poppins link removed -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
   :root {
@@ -68,8 +71,9 @@
     box-shadow: 0 8px 24px rgba(60,80,100,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .header-card h1 {
+    font-family: 'Noto Serif SC', Georgia, serif;
     font-size: 30px; font-weight: 700; color: var(--title);
-    letter-spacing: -0.02em; line-height: 1.2;
+    letter-spacing: -0.01em; line-height: 1.2;
     display: inline-flex; align-items: center; gap: 12px; justify-content: center;
   }
   .header-card h1 .ico {
@@ -449,7 +453,7 @@
   @keyframes splashUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: translateY(0); } }
   .splash-card .mark { color: var(--accent); margin-bottom: 16px; display: inline-flex; }
   .splash-card .mark svg { width: 42px; height: 42px; stroke-width: 1.6; }
-  .splash-card h1 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 8px; }
+  .splash-card h1 { font-family: 'Noto Serif SC', Georgia, serif; font-size: 26px; font-weight: 700; letter-spacing: -.01em; color: var(--text); margin: 0 0 8px; }
   .splash-card .en { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 18px; }
   .splash-card .div { width: 46px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); margin: 0 auto 14px; }
   .splash-card .hint { font-size: 13px; color: var(--text-secondary); }
