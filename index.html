@@ -96,7 +96,11 @@
   .sticky-bar.show { transform: translateY(0); }
   .sb-inner { display: flex; align-items: center; justify-content: center; pointer-events: auto; }
   .sticky-bar .date-pill {
-    box-shadow: 0 10px 30px rgba(60,80,100,0.16), 0 4px 12px rgba(60,80,100,0.10);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.95),
+      inset 0 0 0 1px rgba(255,255,255,0.35),
+      0 16px 40px rgba(60,80,100,0.16),
+      0 5px 14px rgba(60,80,100,0.09);
   }
   .sticky-bar .date-btn { cursor: pointer; }
   .sticky-bar .date-nav { cursor: pointer; }
@@ -107,13 +111,17 @@
   }
   .date-pill {
     display: flex; align-items: center; gap: 2px;
-    background: rgba(255,255,255,0.58);
-    -webkit-backdrop-filter: blur(26px) saturate(200%);
-    backdrop-filter: blur(26px) saturate(200%);
-    border: 1px solid rgba(255,255,255,0.78);
-    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.28) 100%);
+    -webkit-backdrop-filter: blur(32px) saturate(260%) brightness(1.06);
+    backdrop-filter: blur(32px) saturate(260%) brightness(1.06);
+    border: 1px solid rgba(255,255,255,0.82);
+    border-radius: 34px;
     padding: 5px 6px;
-    box-shadow: 0 14px 40px rgba(60,80,100,0.18), 0 5px 14px rgba(60,80,100,0.10);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.95),
+      inset 0 0 0 1px rgba(255,255,255,0.35),
+      0 18px 48px rgba(60,80,100,0.14),
+      0 6px 18px rgba(60,80,100,0.08);
   }
   .date-nav {
     width: 34px; height: 34px; border-radius: 50%; border: none;
@@ -395,13 +403,17 @@
     position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
     z-index: 100;
     display: flex; align-items: center; gap: 4px;
-    background: rgba(255,255,255,0.58);
-    -webkit-backdrop-filter: blur(26px) saturate(200%);
-    backdrop-filter: blur(26px) saturate(200%);
-    border: 1px solid rgba(255,255,255,0.78);
-    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.26) 100%);
+    -webkit-backdrop-filter: blur(34px) saturate(270%) brightness(1.06);
+    backdrop-filter: blur(34px) saturate(270%) brightness(1.06);
+    border: 1px solid rgba(255,255,255,0.82);
+    border-radius: 36px;
     padding: 7px 10px;
-    box-shadow: 0 14px 40px rgba(60,80,100,0.18), 0 5px 14px rgba(60,80,100,0.10);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.95),
+      inset 0 0 0 1px rgba(255,255,255,0.35),
+      0 22px 56px rgba(60,80,100,0.18),
+      0 8px 22px rgba(60,80,100,0.10);
   }
   .float-nav .nav-item {
     flex: 1 1 0; display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -413,8 +425,12 @@
   }
   .float-nav .nav-item svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .float-nav .nav-item.active {
-    background: var(--accent-tint); color: var(--accent);
-    box-shadow: 0 2px 10px rgba(239,154,123,0.22);
+    background: linear-gradient(180deg, rgba(239,154,123,0.26) 0%, rgba(239,154,123,0.10) 100%);
+    color: var(--accent);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.75),
+      0 3px 12px rgba(239,154,123,0.18);
+    border: 1px solid rgba(239,154,123,0.32);
   }
   .float-nav .nav-item:active { transform: scale(.94); }
   #checklistPanel { display: none; }
