@@ -542,7 +542,7 @@
     <h1>工作人效收集</h1>
     <div class="en">Daily Efficiency Collection</div>
     <div class="div"></div>
-    <div class="hint">轻触进入今日日报</div>
+    <div class="hint" id="splashHint">轻触进入今日日报</div>
     <div class="daily-quote" id="dailyQuote"></div>
   </div>
   <div class="splash-foot">基于电脑活动痕迹自动生成 · 每日 17:50 更新</div>
@@ -1188,6 +1188,9 @@
   if (splash) {
     const q = document.getElementById('dailyQuote');
     if (q) q.innerHTML = pickQuote();
+    const h = document.getElementById('splashHint');
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    if (h) h.textContent = days[new Date().getDay()];
     splash.addEventListener('click', dismissSplash);
     requestAnimationFrame(() => splash.classList.add('in'));
   }
